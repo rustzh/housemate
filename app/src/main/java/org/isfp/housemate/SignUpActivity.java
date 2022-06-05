@@ -25,7 +25,7 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
     //String tempKey;
 
-    private DocumentReference mDocRef = FirebaseFirestore.getInstance().document("sampleData/inspiration");
+    private DocumentReference userRef = FirebaseFirestore.getInstance().document("sampleData/inspiration");
 
 
     @Override
@@ -50,13 +50,15 @@ public class SignUpActivity extends AppCompatActivity {
         Map<String, Object> dataToSave = new HashMap<String, Object>();
         dataToSave.put("email", email);
         dataToSave.put("password", password);
-        mDocRef.set(dataToSave).addOnCompleteListener(new OnCompleteListener<Void>() {
+        userRef.set(dataToSave).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(SignUpActivity.this, "회원가입 완료", Toast.LENGTH_SHORT).show();
                     Log.d("signup", "회원가입 성공");
                 } else{
+
+                    Toast.makeText(SignUpActivity.this, "회원가입 실패!", Toast.LENGTH_SHORT).show();
                     Log.w("signup", "회원가입 실패", task.getException());
                 }
             }
