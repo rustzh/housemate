@@ -19,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Ref;
 
 public class ConnectActivity extends AppCompatActivity {
-    String tempkey;
     FirebaseAuth auth;
     FirebaseDatabase database;
     DatabaseReference userRef;

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "86466976905",
+    "firebase_url": "https://housemate-6fa71-default-rtdb.firebaseio.com",
     "project_id": "housemate-6fa71",
     "storage_bucket": "housemate-6fa71.appspot.com"
   },
@@ -10,35 +11,6 @@
         "mobilesdk_app_id": "1:86466976905:android:0c45aaf6bf0345f63d7a58",
         "android_client_info": {
           "package_name": "org.isfp.housemate"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "86466976905-qlqv69igamgtaonfhgeu8k3o671crlhl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB96NsbSoKe-nq3aMjePybJQ7iaXUh1TgA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "86466976905-qlqv69igamgtaonfhgeu8k3o671crlhl.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:86466976905:android:8a6b4505089d3c263d7a58",
-        "android_client_info": {
-          "package_name": "org.nyeong.housemate"
         }
       },
       "oauth_client": [
