@@ -12,5 +12,9 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+<<<<<<< HEAD
 rootProject.name = "My Application"
+=======
+rootProject.name = "HouseMate"
+>>>>>>> dd1c6148a8f6bb55481a13c6dd7365a59f23c598
 include ':app'

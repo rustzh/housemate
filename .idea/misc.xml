@@ -3,9 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/android-sdk/MyApplication2/app/src/main/res/drawable/ic_next.xml" value="0.259" />
         <entry key="..\:/android-sdk/MyApplication2/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/android-sdk/MyApplication2/app/src/main/res/layout/calendar.xml" value="0.25364583333333335" />
+=======
+<<<<<<< HEAD
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_connect.xml" value="0.2755208333333333" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_main.xml" value="0.2857142857142857" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_signin.xml" value="0.271875" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_signup.xml" value="0.2857142857142857" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_sineup.xml" value="0.1" />
+        <entry key="..\:/android-sdk/hm/app/src/main/res/layout/activity_main.xml" value="0.13072916666666667" />
+=======
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_main.xml" value="0.12447916666666667" />
+>>>>>>> d5f2f3fa4861ed86d6f025a8a246dd253ced55a6
+>>>>>>> dd1c6148a8f6bb55481a13c6dd7365a59f23c598
       </map>
     </option>
   </component>
