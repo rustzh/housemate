@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase database;
-    Button logOutButton;
+//    Button logOutButton;
 
     TextView monthYearText;//년월 텍스트뷰
     LocalDate selectedDate;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
-        System.out.println("getCurrentUSer = " + auth.getCurrentUser());
+        System.out.println("getCurrentUSer = " + auth.getCurrentUser().getUid());
 
         if (auth.getCurrentUser() == null) {
             System.out.println("go to sign in");

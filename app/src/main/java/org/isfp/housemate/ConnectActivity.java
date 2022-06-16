@@ -77,6 +77,7 @@ public class ConnectActivity extends AppCompatActivity {
                     dataSnapshot.child(myNumber).child("friendNumber").getRef().setValue(friendNumber);
                     dataSnapshot.child(myNumber).child("status").child("confirm").getRef().setValue("none");
                     userRef.child(userUid).child("myNumber").setValue(myNumber);
+                    userRef.child(userUid).child("dataRoom").setValue(myNumber+friendNumber);
                     // 여기서 두 유저의 데이터를 저장할 곳을 만듦
 
                     Intent intent = new Intent(ConnectActivity.this, WaitingActivity.class);
@@ -89,6 +90,7 @@ public class ConnectActivity extends AppCompatActivity {
                     userRef.child(userUid).child("connect").setValue("yes");
                     userRef.child(userUid).child("myNumber").setValue(myNumber);
                     userRef.child(userUid).child("friendNumber").setValue(friendNumber);
+                    userRef.child(userUid).child("dataRoom").setValue(friendNumber+myNumber);
                     // 완성된 메인화면으로 이동
                     Intent intent = new Intent(ConnectActivity.this, MainActivity.class);
                     intent.putExtra("myNumber", myNumber);
