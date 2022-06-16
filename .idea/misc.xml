@@ -3,7 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_connect.xml" value="0.2755208333333333" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_main.xml" value="0.2857142857142857" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_signin.xml" value="0.271875" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_signup.xml" value="0.2857142857142857" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_sineup.xml" value="0.1" />
+        <entry key="..\:/android-sdk/hm/app/src/main/res/layout/activity_main.xml" value="0.13072916666666667" />
+=======
         <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_main.xml" value="0.12447916666666667" />
+>>>>>>> d5f2f3fa4861ed86d6f025a8a246dd253ced55a6
       </map>
     </option>
   </component>
