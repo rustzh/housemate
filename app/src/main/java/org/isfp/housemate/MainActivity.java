@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
-        System.out.println("getCurrentUSer = " + auth.getCurrentUser());
+        System.out.println("getCurrentUSer = " + auth.getCurrentUser().getUid());
 
         if (auth.getCurrentUser() == null){
             System.out.println("go to sign in");
