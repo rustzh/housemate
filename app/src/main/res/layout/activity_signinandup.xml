@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SignInAndUpActivity">
 
 
     <TextView
@@ -18,12 +18,26 @@
         />
 
     <Button
-        android:id="@+id/logOutButton"
+        android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/guideline"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="285dp"
-        android:text="Button" />
+        android:layout_marginBottom="30dp"
+        android:text="로그인" />
 
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/guideline"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="회원가입" />
+
+    <TextView
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>
