@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase database;
-    Button logOutButton;
+//    Button logOutButton;
 
     TextView monthYearText;//년월 텍스트뷰
     LocalDate selectedDate;
