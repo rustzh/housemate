@@ -45,6 +45,7 @@ public class SettingActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String userDataRoom = intent.getStringExtra("dataRoom");
+        System.out.println("dataRoom = " + userDataRoom);
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
@@ -60,6 +61,23 @@ public class SettingActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, list);
         houseworklistView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         houseworklistView.setAdapter(adapter);
+
+        dataRoomRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(userDataRoom)){
+                    Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+                    intent.putExtra("dataRoom", userDataRoom);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         houseworklistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,6 +119,9 @@ public class SettingActivity extends AppCompatActivity {
                 for (Object object : list){
                     String value = (String) object;
                     dataRoomRef.child(userDataRoom).child("housework").child(value).setValue("");
+                    Toast.makeText(SettingActivity.this, "설정 완료", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             }
         });
