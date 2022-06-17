@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,15 +27,14 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
     FirebaseAuth auth;
     FirebaseDatabase database;
 //    Button logOutButton;
 
     TextView monthYearText;//년월 텍스트뷰
-    LocalDate selectedDate;
     RecyclerView recyclerView;
-
+    LocalDate selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +45,15 @@ public class MainActivity extends AppCompatActivity {
         ImageButton prevBtn = findViewById(R.id.pre_btn);
         ImageButton nextBtn = findViewById(R.id.next_btn);
         recyclerView=findViewById(R.id.recyclerView);
+
         //현재 날짜
         selectedDate = LocalDate.now();
 
+        setMonthView();//화면설정
+
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
-        System.out.println("getCurrentUSer = " + auth.getCurrentUser().getUid());
+        //ystem.out.println("getCurrentUSer = " + auth.getCurrentUser().getUid());
 
         if (auth.getCurrentUser() == null) {
             System.out.println("go to sign in");
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        setMonthView();//화면설정
+
 
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,15 +86,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(selectedDate));
-        ArrayList<String> dayList=daysInMonthList(selectedDate);
+        ArrayList<LocalDate> dayList=daysInMonthArray(selectedDate);
         CalendarAdapter adapter=new CalendarAdapter(dayList);
+
         RecyclerView.LayoutManager manager=new GridLayoutManager(getApplicationContext(),7);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
     }
 
-    private ArrayList<String> daysInMonthList(LocalDate date) {
-        ArrayList<String> dayList = new ArrayList<>();
+    private ArrayList<LocalDate> daysInMonthArray(LocalDate date) {
+        ArrayList<LocalDate> dayList = new ArrayList<>();
         YearMonth yearMonth = YearMonth.from(date);
         int lastDay = yearMonth.lengthOfMonth();
         LocalDate firstDay = selectedDate.withDayOfMonth(1);
@@ -99,17 +103,22 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 1; i < 42; i++) {
             if (i <= dayOfWeek || i > lastDay + dayOfWeek) {
-                dayList.add("");
+                dayList.add(null);
 
             } else {
-                dayList.add(String.valueOf(i - dayOfWeek));
+                dayList.add(LocalDate.of(selectedDate.getYear(),selectedDate.getMonth(),i- dayOfWeek));
             }
         }
         return dayList;
-
     }
-
 }
+    //public void onItemClick(String dayText){
+    //    String yearMonDay=monthYearFromDate(CalendarUtil.selectedDate)+" "+dayText+"일";
+        //Toast.makeText(this,yearMonDay,Toast.LENGTH_SHORT).show();
+    //}
+
+
+
 // 로그아웃 버튼
 //    Button logOutButton = (Button) findViewById(R.id.logOutButton);
 //        logOutButton.setOnClickListener(new View.OnClickListener(){

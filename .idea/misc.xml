@@ -5,8 +5,10 @@
       <map>
         <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_main.xml" value="0.12447916666666667" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/drawable/ic_next.xml" value="0.1" />
-        <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_main.xml" value="0.20742753623188406" />
-        <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/calendar_cell.xml" value="0.1" />
+        <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_today.xml" value="0.22056159420289856" />
+        <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_todayhousework.xml" value="0.22056159420289856" />
+        <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/calendar_cell.xml" value="0.264" />
       </map>
     </option>
   </component>

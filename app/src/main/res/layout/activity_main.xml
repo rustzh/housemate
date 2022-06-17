@@ -45,7 +45,8 @@
             android:textStyle="bold"
             android:textSize="18sp"
             android:textAlignment="center"
-            android:textColor="@android:color/holo_red_dark"/>
+            android:textColor="@color/babypink"/>
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
