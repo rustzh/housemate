@@ -92,9 +92,8 @@ public class ConnectActivity extends AppCompatActivity {
                     userRef.child(userUid).child("friendNumber").setValue(friendNumber);
                     userRef.child(userUid).child("dataRoom").setValue(friendNumber+myNumber);
                     // 완성된 메인화면으로 이동
-                    Intent intent = new Intent(ConnectActivity.this, MainActivity.class);
-                    intent.putExtra("myNumber", myNumber);
-                    intent.putExtra("friendNumber", friendNumber);
+                    Intent intent = new Intent(ConnectActivity.this, SettingActivity.class);
+                    intent.putExtra("dataRoom", friendNumber+myNumber);
                     startActivity(intent);
                 }
             }

@@ -1,5 +1,7 @@
 package org.isfp.housemate;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +17,11 @@ import java.util.ArrayList;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>{
     ArrayList<LocalDate> dayList;
-
+    private Context context;
     public CalendarAdapter(ArrayList<LocalDate> dayList){
+
         this.dayList=dayList;
+        this.context = context;
     }
     @NonNull
     @Override
@@ -44,11 +48,16 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                Context context = view.getContext();
                 int iYear=day.getYear();
                 int iMonth=day.getMonthValue();
                 int iDay=day.getDayOfMonth();
                 String yearMonDay=iYear+"년"+iMonth+"월"+iDay+"일";
-                Toast.makeText(holder.itemView.getContext(), yearMonDay,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(holder.itemView.getContext(), yearMonDay,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), TodayActivity.class);
+                context.startActivity(intent);
+
+
             }
         });
     }

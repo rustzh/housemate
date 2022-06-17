@@ -24,6 +24,7 @@
         <activity android:name=".WaitingActivity"></activity>
         <activity android:name=".SignInAndUpActivity"></activity>
         <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".TodayActivity"></activity>
     </application>
 
 </manifest>

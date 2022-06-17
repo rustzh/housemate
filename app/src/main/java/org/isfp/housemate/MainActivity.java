@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity  {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
-        //ystem.out.println("getCurrentUSer = " + auth.getCurrentUser().getUid());
 
         if (auth.getCurrentUser() == null) {
             System.out.println("go to sign in");
@@ -83,6 +82,8 @@ public class MainActivity extends AppCompatActivity  {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM월 yyyy");
         return date.format(formatter);
     }
+
+
 
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(selectedDate));
