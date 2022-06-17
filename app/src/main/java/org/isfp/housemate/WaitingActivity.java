@@ -53,7 +53,8 @@ public class WaitingActivity extends AppCompatActivity {
                         userRef.child(userUid).child("connect").setValue("yes");
                         userRef.child(userUid).child("friendNumber").setValue(friendNumber);
                         Toast.makeText(WaitingActivity.this, "연결되었습니다", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(WaitingActivity.this, MainActivity.class);
+                        Intent intent = new Intent(WaitingActivity.this, SettingActivity.class);
+                        intent.putExtra("dataRoom", myNumber+friendNumber);
                         startActivity(intent);
                     }
                     Toast.makeText(WaitingActivity.this, snapshot.getValue(String.class), Toast.LENGTH_SHORT).show();

@@ -1,26 +1,108 @@
 package org.isfp.housemate;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class SettingActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     FirebaseDatabase database;
     DatabaseReference userRef;
+    DatabaseReference dataRoomRef;
+    FirebaseUser user;
+
+    ListView houseworklistView;
+    ArrayList<String> list = new ArrayList<String>();
+    Button AddButton;
+    Button DelButton;
+    Button settingButton;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        Intent intent = getIntent();
+        String userDataRoom = intent.getStringExtra("dataRoom");
+
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
         userRef = database.getReference("user");
+        dataRoomRef = database.getReference("dataRoom");
+        user = auth.getCurrentUser();
+
+        houseworklistView = (ListView) findViewById(R.id.HouseworklistView);
+        AddButton = (Button) findViewById(R.id.AddButton);
+        DelButton = (Button) findViewById(R.id.DelButton);
+        settingButton = (Button) findViewById(R.id.settingButton);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, list);
+        houseworklistView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        houseworklistView.setAdapter(adapter);
+
+        houseworklistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int i, long id) {
+                String item = list.get(i);
+            }
+        });
+
+        final EditText inputHousework = (EditText) findViewById(R.id.inputHousework);
+
+        AddButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                int count = adapter.getCount();
+                if (count == 7){
+                    Toast.makeText(SettingActivity.this,"최대 7개까지 가능합니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String input = inputHousework.getText().toString();
+                list.add(input);
+                adapter.notifyDataSetChanged();
+                inputHousework.setText("");
+            }
+        });
+
+        DelButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                int position = houseworklistView.getCheckedItemPosition();
+                list.remove(position);
+                adapter.notifyDataSetChanged();
+                houseworklistView.clearChoices();
+            }
+        });
+
+        settingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (Object object : list){
+                    String value = (String) object;
+                    dataRoomRef.child(userDataRoom).child("housework").child(value).setValue("");
+                }
+            }
+        });
     }
 }

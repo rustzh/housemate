@@ -64,11 +64,6 @@ public class SignInActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(SignInActivity.this, ConnectActivity.class);
                     startActivity(intent);
-
-//                    tempKey = email.replace(".", "_");
-//                    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-//                    User user = new User(fUser.getUid(), email, refreshedToken);
-//                    userRef.child(tempKey).setValue(user);
                 } else {
                     Toast.makeText(SignInActivity.this, "존재하지 않는 이메일이거나 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
