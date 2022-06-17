@@ -61,9 +61,28 @@ public class SignInActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(SignInActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                    userRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                if ("yes".equals(snapshot.getValue(String.class))) {
+                                    Toast.makeText(SignInActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    Toast.makeText(SignInActivity.this, "상대방과 연결을 해야 합니다.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(SignInActivity.this, SettingActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        }
 
-                    Intent intent = new Intent(SignInActivity.this, ConnectActivity.class);
-                    startActivity(intent);
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 } else {
                     Toast.makeText(SignInActivity.this, "존재하지 않는 이메일이거나 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }

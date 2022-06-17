@@ -78,7 +78,6 @@ public class SignUpActivity extends AppCompatActivity {
                     userRef.child(user.getUid()).child("email").setValue(email);
                     userRef.child(user.getUid()).child("password").setValue(password);
                     userRef.child(user.getUid()).child("name").setValue(name);
-                    userRef.child(user.getUid()).child("connect").setValue("none");
                 }
                 else {
                     Toast.makeText(SignUpActivity.this, "이미 등록된 이메일입니다.", Toast.LENGTH_SHORT).show();
