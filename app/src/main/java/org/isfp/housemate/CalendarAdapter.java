@@ -54,7 +54,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 int iDay=day.getDayOfMonth();
                 String yearMonDay=iYear+"년"+iMonth+"월"+iDay+"일";
                 //Toast.makeText(holder.itemView.getContext(), yearMonDay,Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(view.getContext(), TodayActivity.class);
+                Intent intent = new Intent(view.getContext(),TodayActivity.class);//TodayActivity
                 intent.putExtra("년", iYear);
                 intent.putExtra("월", iMonth);
                 intent.putExtra("일", iDay);

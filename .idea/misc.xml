@@ -8,6 +8,7 @@
         <entry key="..\:/android-sdk/housemate/app/src/main/res/drawable/ic_launcher_background.xml" value="0.223" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/drawable/ic_next.xml" value="0.1" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/drawable/shape_bg.xml" value="0.1945" />
+        <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_checkwork.xml" value="0.264" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_connect.xml" value="0.22056159420289856" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_listc.xml" value="0.1" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -19,9 +20,11 @@
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_todayhousework.xml" value="0.22056159420289856" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_waiting.xml" value="0.22056159420289856" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/calendar_cell.xml" value="0.264" />
+        <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/file_paths.xml" value="0.1527777777777778" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/itembg.xml" value="0.18645833333333334" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/listitem.xml" value="0.18645833333333334" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/listview.xml" value="0.18645833333333334" />
+        <entry key="..\:/android-sdk/housemate/app/src/main/res/xml/file_paths.xml" value="0.13958333333333334" />
       </map>
     </option>
   </component>

@@ -1,9 +1,9 @@
 package org.isfp.housemate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.widget.BaseAdapter;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -11,11 +11,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.List;
 
 public class TodayActivity extends AppCompatActivity {
     FirebaseAuth auth;
@@ -36,6 +33,7 @@ public class TodayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listc);
 
+
         Intent intent = getIntent();
         year = intent.getIntExtra("년", 0);
         month = intent.getIntExtra("월", 0);
@@ -47,6 +45,7 @@ public class TodayActivity extends AppCompatActivity {
         profile2=(ImageButton)findViewById(R.id.profile2);
 
 
+
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
         houseworkRef = database.getReference("user");
@@ -55,8 +54,17 @@ public class TodayActivity extends AppCompatActivity {
         dateText = (TextView) findViewById(R.id.dateText);
         dateText.setText(year + "." + month + "." + day);
 
+        workname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = view.getContext();
+                Intent intent = new Intent(view.getContext(), CameraActivity.class);
+                startActivity(intent);
 
+            }
+        });
     }
+
 
 
 }
