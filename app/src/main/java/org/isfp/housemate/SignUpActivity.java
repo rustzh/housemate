@@ -1,6 +1,7 @@
 package org.isfp.housemate;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -8,10 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +27,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.HashMap;
@@ -32,14 +38,18 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase database;
+    FirebaseStorage storage;
     DatabaseReference userRef;
+    StorageReference userStorageRef;
+    String userUid;
     EditText inputEmail;
     EditText inputPW;
     EditText inputName;
+    ImageView inputProfile;
     Uri profileImageUri;
-    String progilePathUri;
+    String profilePathUri;
     File tempFile;
-
+    public static final int PICK_FROM_ALBUM = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +59,20 @@ public class SignUpActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
+        storage = FirebaseStorage.getInstance("gs://housemate-6fa71.appspot.com");
         userRef = database.getReference("user");
+        userStorageRef = storage.getReference("user/");
+
+        inputProfile = (ImageView) findViewById(R.id.inputProfile);
+
+        inputProfile.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, PICK_FROM_ALBUM);
+            }
+        });
     }
 
     public void signup(View view){
@@ -77,16 +100,26 @@ public class SignUpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(SignUpActivity.this, "회원가입 완료", Toast.LENGTH_SHORT).show();
-                    FirebaseUser user = auth.getCurrentUser();
-                    System.out.println("userUid: " + user.getUid());
+                    FirebaseUser fuser = auth.getCurrentUser();
+                    userUid = fuser.getUid();
 
+                    final Uri file = Uri.fromFile(new File(profilePathUri));
+
+                    userStorageRef.child("uid/"+file.getLastPathSegment()).putFile(profileImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            final Task<Uri> imageUri = task.getResult().getStorage().getDownloadUrl();
+                            while (!imageUri.isComplete());
+
+                            org.isfp.housemate.User user = new org.isfp.housemate.User(userUid, name, email, password, imageUri.getResult().toString());
+                            userRef.child(userUid).setValue(user);
+                        }
+                    });
+//                    userRef.child(user.getUid()).child("email").setValue(email);
+//                    userRef.child(user.getUid()).child("password").setValue(password);
+//                    userRef.child(user.getUid()).child("name").setValue(name);
                     Intent intent = new Intent(SignUpActivity.this, ConnectActivity.class);
                     startActivity(intent);
-
-//                    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-                    userRef.child(user.getUid()).child("email").setValue(email);
-                    userRef.child(user.getUid()).child("password").setValue(password);
-                    userRef.child(user.getUid()).child("name").setValue(name);
                 }
                 else {
                     Toast.makeText(SignUpActivity.this, "이미 등록된 이메일입니다.", Toast.LENGTH_SHORT).show();
@@ -95,9 +128,39 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    public void goToAlbum(){
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) { // 코드가 틀릴경우
+            if (tempFile != null) {
+                if (tempFile.exists()) {
+                    if (tempFile.delete()) {
+                        tempFile = null;
+                    }
+                }
+            }
+            return;
+        }
 
+        switch (requestCode) {
+            case PICK_FROM_ALBUM: { // 코드 일치
+                // Uri
+                profileImageUri = data.getData();
+                profilePathUri = getPath(data.getData());
+                inputProfile.setImageURI(profileImageUri); // 이미지 띄움
+                break;
+            }
+        }
+    }
+
+    public String getPath(Uri uri){
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(this, uri, proj, null, null, null);
+
+        Cursor cursor = cursorLoader.loadInBackground();
+        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+        return cursor.getString(index);
     }
 }

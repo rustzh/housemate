@@ -60,7 +60,15 @@ public class MainActivity extends AppCompatActivity  {
             startActivity(intent);
         }
 
-
+        Button logOutButton = (Button) findViewById(R.id.logOutButton);
+        logOutButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                auth.signOut();
+                Intent intent = new Intent(getApplicationContext(), SignInAndUpActivity.class);
+                startActivity(intent);
+            }
+        });
 
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override

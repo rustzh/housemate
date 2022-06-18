@@ -16,6 +16,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputPW" />
 
+    <ImageView
+        android:id="@+id/inputProfile"
+        android:background="@drawable/default_profile"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="130dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/inputName"
         android:layout_width="wrap_content"
@@ -23,10 +33,9 @@
         android:ems="10"
         android:hint="이름"
         android:inputType="text"
-        android:layout_marginTop="170dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/inputProfile" />
 
     <EditText
         android:id="@+id/inputEmail"
@@ -50,4 +59,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

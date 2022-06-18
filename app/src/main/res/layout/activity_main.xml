@@ -104,7 +104,13 @@
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="450dp"
         android:id="@+id/recyclerView"/>
+
+    <Button
+        android:id="@+id/logOutButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Button" />
 
 </LinearLayout>
