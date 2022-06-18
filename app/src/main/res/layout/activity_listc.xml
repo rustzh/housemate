@@ -1,6 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativelayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:elevation="7dp"
+    android:padding="10dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/todayhw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="75dp"
+        android:layout_marginBottom="500dp"
+        android:text="오늘의 집안일"
+        android:textSize="50dp"/>
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:textSize="25sp" />
+
+    <RelativeLayout
+        android:id="@+id/listshape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/shape_bg">
+
+        <ImageView
+            android:id="@+id/check"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            app:srcCompat="@drawable/check"
+            />
+
+        <TextView
+            android:id="@+id/workname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="13dp"
+            android:layout_toRightOf="@id/check"
+            android:text="음식물 쓰레기 버리기"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+        <ImageButton
+            android:id="@+id/profile1"
+            android:layout_width="50dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="85dp"
+            android:layout_toRightOf="@id/workname"
+            android:layout_weight="1"
+            android:src="@drawable/ic_launcher_foreground" />
+
+        <ImageButton
+            android:id="@+id/profile2"
+            android:layout_width="50dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/workname"
+            android:layout_weight="1"
+            android:src="@drawable/ic_launcher_foreground" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

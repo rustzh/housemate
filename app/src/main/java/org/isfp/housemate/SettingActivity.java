@@ -92,10 +92,14 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 int count = adapter.getCount();
+
+
                 if (count == 7){
                     Toast.makeText(SettingActivity.this,"최대 7개까지 가능합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                intent.putExtra("리스트", count);
                 String input = inputHousework.getText().toString();
                 list.add(input);
                 adapter.notifyDataSetChanged();
