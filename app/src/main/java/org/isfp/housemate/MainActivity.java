@@ -35,11 +35,27 @@ public class MainActivity extends AppCompatActivity  {
     TextView monthYearText;//년월 텍스트뷰
     RecyclerView recyclerView;
     LocalDate selectedDate;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
+
+        if (auth.getCurrentUser() == null) {
+            System.out.println("go to sign in");
+            finish();
+            Intent intent2 = new Intent(MainActivity.this, SignInAndUpActivity.class);
+            startActivity(intent2);
+        }
+
+        Intent intent = getIntent();
+        user = (User)intent.getSerializableExtra("user");
+//        System.out.println("user 정보: "+user.name +" "+user.email+" "+user.connectState);
+        // 어플 꺼졌다가 켜지면 user 정보 사라짐 ㅋㅋ
 
         monthYearText = findViewById(R.id.monthYearText);
         ImageButton prevBtn = findViewById(R.id.pre_btn);
@@ -51,20 +67,12 @@ public class MainActivity extends AppCompatActivity  {
 
         setMonthView();//화면설정
 
-        auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
-
-        if (auth.getCurrentUser() == null) {
-            System.out.println("go to sign in");
-            Intent intent = new Intent(MainActivity.this, SignInAndUpActivity.class);
-            startActivity(intent);
-        }
-
         Button logOutButton = (Button) findViewById(R.id.logOutButton);
         logOutButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 auth.signOut();
+                finish();
                 Intent intent = new Intent(getApplicationContext(), SignInAndUpActivity.class);
                 startActivity(intent);
             }
@@ -128,13 +136,3 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-// 로그아웃 버튼
-//    Button logOutButton = (Button) findViewById(R.id.logOutButton);
-//        logOutButton.setOnClickListener(new View.OnClickListener(){
-//@Override
-//public void onClick(View view){
-//        auth.signOut();
-//        Intent intent = new Intent(getApplicationContext(), SignInAndUpActivity.class);
-//        startActivity(intent);
-//        }
-//        });

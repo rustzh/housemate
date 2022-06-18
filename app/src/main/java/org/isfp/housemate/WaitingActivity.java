@@ -23,6 +23,7 @@ public class WaitingActivity extends AppCompatActivity {
     String userUid;
     String myNumber;
     String friendNumber;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +31,14 @@ public class WaitingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_waiting);
 
         Intent intent = getIntent();
-        myNumber = intent.getStringExtra("myNumber");
-        friendNumber = intent.getStringExtra("friendNumber");
+        user = (User)intent.getSerializableExtra("user");
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
-        myNumRef = database.getReference("connect").child(myNumber).child("status");
+        myNumRef = database.getReference("connect").child(user.number).child("status");
         userRef = database.getReference("user");
 
         userUid = auth.getCurrentUser().getUid();
-        System.out.println("userUid: " + userUid);
-        System.out.println("userUid: " + userUid);
-        System.out.println("userUid: " + userUid);
-        System.out.println("userUid: " + userUid);
 
 
         myNumRef.addValueEventListener(new ValueEventListener() {
@@ -50,11 +46,12 @@ public class WaitingActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if ("yes".equals(snapshot.getValue(String.class))) {
-                        userRef.child(userUid).child("connect").setValue("yes");
-                        userRef.child(userUid).child("friendNumber").setValue(friendNumber);
+                        user.connectState = "yes";
+                        userRef.child(userUid).setValue(user);
                         Toast.makeText(WaitingActivity.this, "연결되었습니다", Toast.LENGTH_SHORT).show();
+                        finish();
                         Intent intent = new Intent(WaitingActivity.this, SettingActivity.class);
-                        intent.putExtra("dataRoom", myNumber+friendNumber);
+                        intent.putExtra("user", user);
                         startActivity(intent);
                     }
                     Toast.makeText(WaitingActivity.this, snapshot.getValue(String.class), Toast.LENGTH_SHORT).show();

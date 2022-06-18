@@ -1,6 +1,8 @@
 package org.isfp.housemate;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     public String uid;
     public String name;
@@ -9,6 +11,9 @@ public class User {
     public String number;
     public String friendNumber;
     public String profileImageUrl;
+    public String connectState;
+    public String dataRoomNumber;
+
 
     public User(){
 
@@ -22,8 +27,4 @@ public class User {
         this.profileImageUrl = profileImageUrl;
     }
 
-    public User(String number, String friendNumber){
-        this.number = number;
-        this.friendNumber = friendNumber;
-    }
 }

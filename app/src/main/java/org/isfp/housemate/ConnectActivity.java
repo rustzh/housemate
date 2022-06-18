@@ -27,6 +27,7 @@ public class ConnectActivity extends AppCompatActivity {
     EditText inputFriendNumber;
     String userUid;
     String connectState;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,7 @@ public class ConnectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connect);
 
         Intent intent = getIntent();
-        connectState = intent.getStringExtra("connectState");
-        System.out.println("받은 connectState = " + connectState);
+        user = (User)intent.getSerializableExtra("user");
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
@@ -46,23 +46,6 @@ public class ConnectActivity extends AppCompatActivity {
 
         inputMyNumber = (EditText) findViewById(R.id.inputMyNumber);
         inputFriendNumber = (EditText) findViewById(R.id.inputFreindNumber);
-
-//        if (auth.getCurrentUser() != null){
-//            System.out.println("if 문 들어가기 전. connectState = " + connectState);
-//            if (connectState.equals("yes")){
-//                System.out.println("go to TestActivity");
-//                finish();
-//                Intent intent2 = new Intent(ConnectActivity.this, MainActivity.class);
-//                startActivity(intent2);
-//            }
-//            else {
-//            }
-//        }
-
-//        Bundle bundle = getIntent().getExtras();
-//        if (bundle != null) {
-//            tempkey = bundle.getString("tempkey");
-//        }
     }
 
     public void onConnect(View view) {
@@ -76,24 +59,28 @@ public class ConnectActivity extends AppCompatActivity {
                     Toast.makeText(ConnectActivity.this, "연결을 기다립니다.", Toast.LENGTH_LONG).show();
                     dataSnapshot.child(myNumber).child("friendNumber").getRef().setValue(friendNumber);
                     dataSnapshot.child(myNumber).child("status").child("confirm").getRef().setValue("none");
-                    userRef.child(userUid).child("myNumber").setValue(myNumber);
-                    userRef.child(userUid).child("dataRoom").setValue(myNumber+friendNumber);
+                    user.dataRoomNumber = myNumber+friendNumber;
+                    user.number = myNumber;
+                    user.friendNumber = friendNumber;
+                    userRef.child(userUid).setValue(user);
                     // 여기서 두 유저의 데이터를 저장할 곳을 만듦
 
+                    finish();
                     Intent intent = new Intent(ConnectActivity.this, WaitingActivity.class);
-                    intent.putExtra("myNumber", myNumber);
-                    intent.putExtra("friendNumber", friendNumber);
+                    intent.putExtra("user", user);
                     startActivity(intent);
                 } else {
                     Toast.makeText(ConnectActivity.this, "연결되었습니다.", Toast.LENGTH_LONG).show();
                     dataSnapshot.child(friendNumber).child("status").child("confirm").getRef().setValue("yes");
-                    userRef.child(userUid).child("connect").setValue("yes");
-                    userRef.child(userUid).child("myNumber").setValue(myNumber);
-                    userRef.child(userUid).child("friendNumber").setValue(friendNumber);
-                    userRef.child(userUid).child("dataRoom").setValue(friendNumber+myNumber);
+                    user.dataRoomNumber = friendNumber+myNumber;
+                    user.number = myNumber;
+                    user.friendNumber = friendNumber;
+                    user.connectState = "yes";
+                    userRef.child(userUid).setValue(user);
                     // 완성된 메인화면으로 이동
+                    finish();
                     Intent intent = new Intent(ConnectActivity.this, SettingActivity.class);
-                    intent.putExtra("dataRoom", friendNumber+myNumber);
+                    intent.putExtra("user", user);
                     startActivity(intent);
                 }
             }

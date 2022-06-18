@@ -113,13 +113,12 @@ public class SignUpActivity extends AppCompatActivity {
 
                             org.isfp.housemate.User user = new org.isfp.housemate.User(userUid, name, email, password, imageUri.getResult().toString());
                             userRef.child(userUid).setValue(user);
+
+                            Intent intent = new Intent(SignUpActivity.this, ConnectActivity.class);
+                            intent.putExtra("user", user);
+                            startActivity(intent);
                         }
                     });
-//                    userRef.child(user.getUid()).child("email").setValue(email);
-//                    userRef.child(user.getUid()).child("password").setValue(password);
-//                    userRef.child(user.getUid()).child("name").setValue(name);
-                    Intent intent = new Intent(SignUpActivity.this, ConnectActivity.class);
-                    startActivity(intent);
                 }
                 else {
                     Toast.makeText(SignUpActivity.this, "이미 등록된 이메일입니다.", Toast.LENGTH_SHORT).show();
@@ -147,7 +146,8 @@ public class SignUpActivity extends AppCompatActivity {
                 // Uri
                 profileImageUri = data.getData();
                 profilePathUri = getPath(data.getData());
-                inputProfile.setImageURI(profileImageUri); // 이미지 띄움
+                inputProfile.setImageURI(profileImageUri);
+//                inputProfile.setImageDrawable();// 이미지 띄움
                 break;
             }
         }

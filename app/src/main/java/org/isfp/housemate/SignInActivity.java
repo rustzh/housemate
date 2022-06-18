@@ -60,8 +60,12 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    // 로그인 시 정보 user에 저장하는 것도 구현해야 함
                     Toast.makeText(SignInActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                    userRef.addValueEventListener(new ValueEventListener() {
+                    FirebaseUser fuser = auth.getCurrentUser();
+                    String userUid = fuser.getUid();
+                    DatabaseReference userUidRef = userRef.child(userUid).getRef();
+                    userUidRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -72,7 +76,7 @@ public class SignInActivity extends AppCompatActivity {
                                 }
                                 else{
                                     Toast.makeText(SignInActivity.this, "상대방과 연결을 해야 합니다.", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(SignInActivity.this, SettingActivity.class);
+                                    Intent intent = new Intent(SignInActivity.this, ConnectActivity.class);
                                     startActivity(intent);
                                 }
                             }

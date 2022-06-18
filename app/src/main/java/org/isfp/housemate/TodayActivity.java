@@ -44,7 +44,10 @@ public class TodayActivity extends AppCompatActivity {
         profile1=(ImageButton)findViewById(R.id.profile1);
         profile2=(ImageButton)findViewById(R.id.profile2);
 
+        // profile1에 본인 사진
 
+
+        // profile2에 친구 사진
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");

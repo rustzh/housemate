@@ -58,6 +58,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 intent.putExtra("년", iYear);
                 intent.putExtra("월", iMonth);
                 intent.putExtra("일", iDay);
+//                intent.putExtra("user", user);
                 System.out.println(iYear+iMonth+iDay);
                 context.startActivity(intent);
 

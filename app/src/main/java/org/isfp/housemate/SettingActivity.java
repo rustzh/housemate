@@ -29,7 +29,7 @@ public class SettingActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference userRef;
     DatabaseReference dataRoomRef;
-    FirebaseUser user;
+    FirebaseUser fuser;
 
     ListView houseworklistView;
     ArrayList<String> list = new ArrayList<String>();
@@ -37,6 +37,7 @@ public class SettingActivity extends AppCompatActivity {
     Button DelButton;
     Button settingButton;
     ArrayAdapter<String> adapter;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +45,13 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         Intent intent = getIntent();
-        String userDataRoom = intent.getStringExtra("dataRoom");
-        System.out.println("dataRoom = " + userDataRoom);
+        user = (User)intent.getSerializableExtra("user");
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
         userRef = database.getReference("user");
         dataRoomRef = database.getReference("dataRoom");
-        user = auth.getCurrentUser();
+        fuser = auth.getCurrentUser();
 
         houseworklistView = (ListView) findViewById(R.id.HouseworklistView);
         AddButton = (Button) findViewById(R.id.AddButton);
@@ -65,10 +65,10 @@ public class SettingActivity extends AppCompatActivity {
         dataRoomRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild(userDataRoom)){
+                if (dataSnapshot.hasChild(user.dataRoomNumber)){
                     Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SettingActivity.this, MainActivity.class);
-                    intent.putExtra("dataRoom", userDataRoom);
+                    intent.putExtra("user", user);
                     startActivity(intent);
                 }
             }
@@ -122,7 +122,8 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 for (Object object : list){
                     String value = (String) object;
-                    dataRoomRef.child(userDataRoom).child("housework").child(value).setValue("");
+                    dataRoomRef.child(user.dataRoomNumber).child("housework").child(value).setValue("");
+
                     Toast.makeText(SettingActivity.this, "설정 완료", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                     startActivity(intent);
