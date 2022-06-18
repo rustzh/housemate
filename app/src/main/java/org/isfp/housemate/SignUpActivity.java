@@ -1,7 +1,9 @@
 package org.isfp.housemate;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,7 +36,9 @@ public class SignUpActivity extends AppCompatActivity {
     EditText inputEmail;
     EditText inputPW;
     EditText inputName;
-    File 
+    Uri profileImageUri;
+    String progilePathUri;
+    File tempFile;
 
 
     @Override
@@ -89,5 +93,11 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void goToAlbum(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+
     }
 }
