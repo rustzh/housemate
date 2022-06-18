@@ -23,17 +23,18 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
-    String tempKey;
     FirebaseAuth auth;
     FirebaseDatabase database;
     DatabaseReference userRef;
     EditText inputEmail;
     EditText inputPW;
     EditText inputName;
+    File 
 
 
     @Override
@@ -55,6 +56,10 @@ public class SignUpActivity extends AppCompatActivity {
         final String password = inputPW.getText().toString();
         final String name = inputName.getText().toString();
 
+        if (name.isEmpty()){
+            Toast.makeText(this, "이름을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (email.isEmpty()){
             Toast.makeText(this, "이메일을 입력해 주세요.", Toast.LENGTH_SHORT).show();
             return;

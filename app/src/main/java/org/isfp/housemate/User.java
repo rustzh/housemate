@@ -6,7 +6,8 @@ public class User {
     public String name;
     public String email;
     public String number;
-    public String friend_number;
+    public String friendNumber;
+    public String profileImageUrl;
 
     public User(){
 
@@ -18,8 +19,8 @@ public class User {
         this.name = name;
     }
 
-    public User(String number, String friend_number){
+    public User(String number, String friendNumber){
         this.number = number;
-        this.friend_number = friend_number;
+        this.friendNumber = friendNumber;
     }
 }
