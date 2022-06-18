@@ -41,10 +41,20 @@ public class ListViewAdapter extends BaseAdapter {
         //현재 포지션에 해당하는 아이템에 글자를 적용하기 위해 list배열에서 객체를 가져온다.
         Listdata listdata = list.get(i);
 
-        //가져온 객체안에 있는 집안일들을 각 뷰에 적용한다
+        //가져온 객체안에 있는 집안일을 각 뷰에 적용한다
         workName.setText(listdata.getWork());
 
         return view;
+    }
+
+    public void addItem(String housework){
+        Listdata listdata = new Listdata();
+
+        listdata.setWork(housework);
+
+        //값들의 조립이 완성된 listdata객체 한개를 list배열에 추가
+        list.add(listdata);
+
     }
 
 }
