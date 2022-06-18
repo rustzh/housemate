@@ -1,66 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_custom_calendar"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-    <TextView
-        android:id="@+id/textView2"
+    >
+    <ListView
+        android:id="@+id/lv_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="오늘의 집안일"
-        android:textAlignment="center"
-        android:textSize="50sp" />
+        android:layout_alignParentTop="true"
+        android:divider="@null"
+        />
 
-    <TextView
-        android:id="@+id/monthYearText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="25sp" />
-    <LinearLayout
-        android:id="@+id/listlayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-
-        <ListView
-            android:id="@+id/houselist"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="5dp"
-            android:fontFamily="@font/kotra_hope"
-            android:layout_gravity="center"
-            android:textColor="@color/black" >
-
-
-        </ListView>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"/>
-
-        <ImageButton
-            android:id="@+id/profile1"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_launcher_foreground" />
-        <ImageButton
-            android:id="@+id/profile2"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_launcher_foreground" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
