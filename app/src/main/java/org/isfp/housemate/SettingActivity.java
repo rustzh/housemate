@@ -39,6 +39,7 @@ public class SettingActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     String tmpDataRoom;
     String userUid;
+//    String[] houseworks = new String[7];
 //    User user;
 
     @Override
@@ -73,9 +74,8 @@ public class SettingActivity extends AppCompatActivity {
                 if (dataSnapshot.hasChild("housework")){
                     Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
                     SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
-                    Intent intent = new Intent(SettingActivity.this, MainActivity.class);
-//                    intent.putExtra("user", user);
-                    startActivity(intent);
+//                    SaveSharedPreference.setValue(SettingActivity.this, "houseworkCount", adapter.getCount());
+
                 }
             }
 
@@ -98,7 +98,6 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 int count = adapter.getCount();
-
 
                 if (count == 7){
                     Toast.makeText(SettingActivity.this,"최대 7개까지 가능합니다.", Toast.LENGTH_SHORT).show();
@@ -126,15 +125,20 @@ public class SettingActivity extends AppCompatActivity {
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Integer i = 0;
                 for (Object object : list){
                     String value = (String) object;
+//                    SaveSharedPreference.setValue(SettingActivity.this, "housework"+String.valueOf(i), value);
                     dataRoomRef.child(tmpDataRoom).child("housework").child(value).setValue(value);
-                    userRef.child(userUid).child("settingState").setValue("yes");
-                    SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
-                    Toast.makeText(SettingActivity.this, "설정 완료", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SettingActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    System.out.println("housework"+String.valueOf(i));
+                    i++;
                 }
+                userRef.child(userUid).child("settingState").setValue("yes");
+                SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
+                SaveSharedPreference.setValue(SettingActivity.this, "houseworkCount", adapter.getCount());
+                Toast.makeText(SettingActivity.this, "설정 완료", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

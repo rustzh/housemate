@@ -32,17 +32,17 @@ public class ListViewAdapter extends BaseAdapter {
         //아이템이 없다면 아래처럼 아이템 레이아웃을 인플레이트 하고 view객체에 담는다.
         if(view == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.activity_listc,viewGroup,false);
+            view = inflater.inflate(R.layout.activity_today,viewGroup,false);
         }
 
         //이제 아이템에 존재하는 텍스트뷰 객체들을 view객체에서 찾아 가져온다
-        TextView workName = (TextView)view.findViewById(R.id.workname);
+//        TextView workName = (TextView)view.findViewById(R.id.workname);
 
         //현재 포지션에 해당하는 아이템에 글자를 적용하기 위해 list배열에서 객체를 가져온다.
         Listdata listdata = list.get(i);
 
         //가져온 객체안에 있는 집안일을 각 뷰에 적용한다
-        workName.setText(listdata.getWork());
+//        workName.setText(listdata.getWork());
 
         return view;
     }
