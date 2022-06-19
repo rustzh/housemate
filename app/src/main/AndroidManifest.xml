@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.isfp.housemate">
-    <uses-feature
-        android:name="android.hardware.Camera"
-        android:required="true"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STROAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.loction.gps"/>
 
     <application
         android:allowBackup="true"
@@ -29,10 +29,14 @@
         <activity android:name=".SignInAndUpActivity"></activity>
         <activity android:name=".SettingActivity"></activity>
         <activity android:name=".TodayActivity"></activity>
-        <activity android:name=".CameraActivity"></activity>
+        <activity
+            android:name=".CameraActivity"
+            android:parentActivityName=".TodayActivity"
+            ></activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="org.isfp.housemate"
+            android:authorities="{org.isfp.housemate}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

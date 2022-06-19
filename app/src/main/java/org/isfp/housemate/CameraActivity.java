@@ -1,9 +1,12 @@
 package org.isfp.housemate;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +34,10 @@ import javax.annotation.Nullable;
 
 public class CameraActivity extends AppCompatActivity {
     final private static String TAG = "태그명";
-    Button btcamera;
+    Button btcamera1;
     ImageView pic;
+    private Boolean isPermission = true;
+    private static final int PICK_FROM_CAMERA = 2;
     final static int TAKE_PICTURE = 1;
 
     // 경로 변수와 요청변수 생성
@@ -42,105 +48,62 @@ public class CameraActivity extends AppCompatActivity {
     //private static final int REQUEST_IMAGE_CODE = 101;
     private String imageFilePath;
     private Uri photoUri;
-
-    Intent intent = getIntent();
-
-
+    File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkwork);
         pic = findViewById(R.id.pic);
-        btcamera = findViewById(R.id.btcamera);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "권한 설정 완료");
-            }
-            else {
-                Log.d(TAG, "권한 설정 요청");
-                ActivityCompat.requestPermissions(CameraActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            }
-        }
+        btcamera1 = findViewById(R.id.btcamera1);
+        File sdcard = Environment.getExternalStorageDirectory();
+        String imageFileName = "capture.jpg";
+        file = new File(sdcard, imageFileName);
 
-        btcamera.setOnClickListener(new View.OnClickListener() {
+
+        pic = findViewById(R.id.pic);
+
+        btcamera1 = findViewById(R.id.btcamera1);
+        btcamera1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                takePic();
+                capture();
             }
+
+
         });
     }
-    // 권한 요청
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.d(TAG, "onRequestPermissionsResult");
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED ) {
-            Log.d(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
+        public void capture () {
+            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+            //startActivityForResult(i, 101);
         }
-    }
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        try {
-            switch (requestCode) {
-                case REQUEST_TAKE_PHOTO: {
-                    if (resultCode == RESULT_OK) {
-                        File file = new File(mCurrentPhotoPath);
-                        Bitmap bitmap;
-                        if (Build.VERSION.SDK_INT >= 29) {
-                            ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), Uri.fromFile(file));
-                            try {
-                                bitmap = ImageDecoder.decodeBitmap(source);
-                                if (bitmap != null) { pic.setImageBitmap(bitmap); }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            try {
-                                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.fromFile(file));
-                                if (bitmap != null) { pic.setImageBitmap(bitmap); }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-        } catch (Exception error) {
-            error.printStackTrace();
-        }
-    }
-    private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
 
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 
-    private void takePic() {
-        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (i.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-            }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+//                Log.d(TAG, "권한 설정 완료");
+//            } else {
+//                Log.d(TAG, "권한 설정 요청");
+//                ActivityCompat.requestPermissions(CameraActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+//            }
+//        }
 
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this, "org.isfp.housemate.fileprovider", photoFile);
-                i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(i, REQUEST_TAKE_PHOTO);
+
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if(requestCode == 101  && resultCode == Activity.RESULT_OK){
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 8;
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+                pic.setImageBitmap(bitmap);
             }
         }
+
     }
+
 
     //    public void takePic(){
 //        Intent i=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -150,4 +113,4 @@ public class CameraActivity extends AppCompatActivity {
 //    }
 
 
-}
+
