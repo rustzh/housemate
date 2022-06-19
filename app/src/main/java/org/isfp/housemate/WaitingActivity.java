@@ -57,7 +57,6 @@ public class WaitingActivity extends AppCompatActivity {
                     if ("yes".equals(snapshot.getValue(String.class))) {
                         connectState = "yes";
                         userRef.child(userUid).child("connectState").setValue("yes");
-                        database.getReference().child("dataRoom").child(tmpDataRoom).child(myNumber).setValue(profileURL);
                         Toast.makeText(WaitingActivity.this, "연결되었습니다", Toast.LENGTH_SHORT).show();
                         SaveSharedPreference.setValue(WaitingActivity.this, "connectState", "yes");
 

@@ -75,7 +75,8 @@ public class SettingActivity extends AppCompatActivity {
                     Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
                     SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
 //                    SaveSharedPreference.setValue(SettingActivity.this, "houseworkCount", adapter.getCount());
-
+                    Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             }
 
