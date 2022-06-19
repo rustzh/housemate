@@ -21,8 +21,6 @@ public class WaitingActivity extends AppCompatActivity {
     DatabaseReference myNumRef;
     DatabaseReference userRef;
     String userUid;
-    String myNumber;
-    String friendNumber;
     User user;
 
     @Override
@@ -48,7 +46,10 @@ public class WaitingActivity extends AppCompatActivity {
                     if ("yes".equals(snapshot.getValue(String.class))) {
                         user.connectState = "yes";
                         userRef.child(userUid).setValue(user);
+                        database.getReference().child("dataRoom").child(user.dataRoomNumber).child(user.number).setValue(user.profileImageUrl);
                         Toast.makeText(WaitingActivity.this, "연결되었습니다", Toast.LENGTH_SHORT).show();
+                        SaveSharedPreference.setValue(WaitingActivity.this, "connectState", "yes");
+
                         finish();
                         Intent intent = new Intent(WaitingActivity.this, SettingActivity.class);
                         intent.putExtra("user", user);

@@ -27,4 +27,9 @@ public class User implements Serializable {
         this.profileImageUrl = profileImageUrl;
     }
 
+    public User(String number, String friendNumber, String dataRoomNumber){
+        this.number = number;
+        this.friendNumber = friendNumber;
+        this.dataRoomNumber = dataRoomNumber;
+    }
 }

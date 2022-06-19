@@ -2,13 +2,17 @@ package org.isfp.housemate;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-public class PreferenceUtil {
+public class SaveSharedPreference {
     private static final String filename = "FirebaseChatting";
 
     private static SharedPreferences getPreference(Context context){
         return context.getSharedPreferences(filename, Context.MODE_PRIVATE);
     }
+//    static SharedPreferences getSharedPreferences(Context context) {
+//        return PreferenceManager.getDefaultSharedPreferences(context);
+//    }
     public static void setValue(Context context, String key, String value){
         SharedPreferences.Editor editor = getPreference(context).edit();
         editor.putString(key, value);
@@ -27,5 +31,11 @@ public class PreferenceUtil {
 
     public static Long getLongValue(Context context, String key){
         return getPreference(context).getLong(key, 0);
+    }
+
+    public static void clearUser(Context context) {
+        SharedPreferences.Editor editor = getPreference(context).edit();
+        editor.clear();
+        editor.commit();
     }
 }

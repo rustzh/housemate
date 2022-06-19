@@ -57,21 +57,17 @@
             android:id="@+id/profile1"
             android:layout_width="50dp"
             android:layout_height="55dp"
-            android:layout_marginLeft="85dp"
+            android:layout_marginLeft="30dp"
             android:layout_toRightOf="@id/workname"
-            android:layout_weight="1"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/profile2"
             android:layout_width="50dp"
             android:layout_height="55dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="85dp"
             android:layout_toRightOf="@id/workname"
-            android:layout_weight="1"
-            android:src="@drawable/ic_launcher_foreground" />
-
-
+            android:layout_weight="1"/>
     </RelativeLayout>
 
 </RelativeLayout>

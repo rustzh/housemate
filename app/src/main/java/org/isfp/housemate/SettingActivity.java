@@ -37,15 +37,16 @@ public class SettingActivity extends AppCompatActivity {
     Button DelButton;
     Button settingButton;
     ArrayAdapter<String> adapter;
-    User user;
+    String tmpDataRoom;
+//    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        Intent intent = getIntent();
-        user = (User)intent.getSerializableExtra("user");
+//        Intent intent = getIntent();
+//        user = (User)intent.getSerializableExtra("user");
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
@@ -62,13 +63,15 @@ public class SettingActivity extends AppCompatActivity {
         houseworklistView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         houseworklistView.setAdapter(adapter);
 
-        dataRoomRef.addValueEventListener(new ValueEventListener() {
+        tmpDataRoom = SaveSharedPreference.getStringValue(SettingActivity.this, "dataRoomNumber");
+        DatabaseReference myRoomRef = dataRoomRef.child(tmpDataRoom).getRef();
+        myRoomRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild(user.dataRoomNumber)){
+                if (dataSnapshot.hasChild("housework")){
                     Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SettingActivity.this, MainActivity.class);
-                    intent.putExtra("user", user);
+//                    intent.putExtra("user", user);
                     startActivity(intent);
                 }
             }
@@ -99,7 +102,7 @@ public class SettingActivity extends AppCompatActivity {
                     return;
                 }
 
-                intent.putExtra("리스트", count);
+//                intent.putExtra("리스트", count);
                 String input = inputHousework.getText().toString();
                 list.add(input);
                 adapter.notifyDataSetChanged();
@@ -122,8 +125,8 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 for (Object object : list){
                     String value = (String) object;
-                    dataRoomRef.child(user.dataRoomNumber).child("housework").child(value).setValue("");
-
+                    dataRoomRef.child(tmpDataRoom).child("housework").child(value).setValue("");
+                    SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
                     Toast.makeText(SettingActivity.this, "설정 완료", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                     startActivity(intent);
