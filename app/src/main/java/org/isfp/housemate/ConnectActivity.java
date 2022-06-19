@@ -59,8 +59,6 @@ public class ConnectActivity extends AppCompatActivity {
                     Toast.makeText(ConnectActivity.this, "연결을 기다립니다.", Toast.LENGTH_LONG).show();
                     dataSnapshot.child(myNumber).child("friendNumber").getRef().setValue(friendNumber);
                     dataSnapshot.child(myNumber).child("status").child("confirm").getRef().setValue("none");
-                    System.out.println(user.dataRoomNumber);
-                    System.out.println(myNumber+friendNumber);
                     user.dataRoomNumber = myNumber+friendNumber;
                     user.number = myNumber;
                     user.friendNumber = friendNumber;
@@ -81,7 +79,8 @@ public class ConnectActivity extends AppCompatActivity {
                     user.friendNumber = friendNumber;
                     user.connectState = "yes";
                     userRef.child(userUid).setValue(user);
-                    database.getReference().child("dataRoom").child(friendNumber+myNumber).child(myNumber).setValue(user.profileImageUrl);
+                    String profileURL = SaveSharedPreference.getStringValue(ConnectActivity.this, "profileURL");
+                    database.getReference().child("dataRoom").child(friendNumber+myNumber).child(myNumber).setValue(profileURL);
                     SaveSharedPreference.setValue(ConnectActivity.this, "connectState", "yes");
                     SaveSharedPreference.setValue(ConnectActivity.this, "myNumber", myNumber);
                     SaveSharedPreference.setValue(ConnectActivity.this, "friendNumber", friendNumber);
