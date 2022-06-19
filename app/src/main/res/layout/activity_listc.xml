@@ -15,14 +15,15 @@
         android:layout_marginBottom="500dp"
         android:text="오늘의 집안일"
         android:textSize="50dp"/>
+
     <TextView
         android:id="@+id/dateText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:text="2022.01.01"
+        android:textAlignment="center"
         android:textSize="25sp" />
 
     <RelativeLayout
@@ -30,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/shape_bg">
 
         <ImageView

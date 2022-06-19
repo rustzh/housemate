@@ -10,7 +10,7 @@ public class User implements Serializable {
     public String password;
     public String number;
     public String friendNumber;
-    public String profileImageUrl;
+    public String profileImageURL;
     public String connectState;
     public String dataRoomNumber;
 
@@ -19,12 +19,12 @@ public class User implements Serializable {
 
     }
 
-    public User(String uid, String name, String email, String password, String profileImageUrl){
+    public User(String uid, String name, String email, String password, String profileImageURL){
         this.uid = uid;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.profileImageUrl = profileImageUrl;
+        this.profileImageURL = profileImageURL;
     }
 
     public User(String number, String friendNumber, String dataRoomNumber){

@@ -49,8 +49,8 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     public void onConnect(View view) {
-        final String myNumber = inputMyNumber.getText().toString();
-        final String friendNumber = inputFriendNumber.getText().toString();
+        String myNumber = inputMyNumber.getText().toString();
+        String friendNumber = inputFriendNumber.getText().toString();
 
         connectRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -59,13 +59,18 @@ public class ConnectActivity extends AppCompatActivity {
                     Toast.makeText(ConnectActivity.this, "연결을 기다립니다.", Toast.LENGTH_LONG).show();
                     dataSnapshot.child(myNumber).child("friendNumber").getRef().setValue(friendNumber);
                     dataSnapshot.child(myNumber).child("status").child("confirm").getRef().setValue("none");
-                    user.dataRoomNumber = myNumber+friendNumber;
-                    user.number = myNumber;
-                    user.friendNumber = friendNumber;
-                    userRef.child(userUid).setValue(user);
+//                    user.dataRoomNumber = myNumber+friendNumber;
+//                    user.number = myNumber;
+//                    user.friendNumber = friendNumber;
+//                    userRef.child(userUid).setValue(user);
+                    userRef.child(userUid).child("dataRoomNumber").setValue(myNumber+friendNumber);
+                    userRef.child(userUid).child("myNumber").setValue(myNumber);
+                    userRef.child(userUid).child("friendNumber").setValue(friendNumber);
                     SaveSharedPreference.setValue(ConnectActivity.this, "myNumber", myNumber);
-                    SaveSharedPreference.setValue(ConnectActivity.this, "friendNumber", user.friendNumber);
-                    SaveSharedPreference.setValue(ConnectActivity.this, "dataRoomNumber", user.dataRoomNumber);
+                    SaveSharedPreference.setValue(ConnectActivity.this, "friendNumber", friendNumber);
+                    SaveSharedPreference.setValue(ConnectActivity.this, "dataRoomNumber", myNumber+friendNumber);
+                    String profileURL = SaveSharedPreference.getStringValue(ConnectActivity.this, "profileURL");
+                    database.getReference().child("dataRoom").child(friendNumber+myNumber).child(myNumber).setValue(profileURL);
 
                     finish();
                     Intent intent = new Intent(ConnectActivity.this, WaitingActivity.class);
@@ -74,11 +79,15 @@ public class ConnectActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(ConnectActivity.this, "연결되었습니다.", Toast.LENGTH_LONG).show();
                     dataSnapshot.child(friendNumber).child("status").child("confirm").getRef().setValue("yes");
-                    user.dataRoomNumber = friendNumber+myNumber;
-                    user.number = myNumber;
-                    user.friendNumber = friendNumber;
-                    user.connectState = "yes";
-                    userRef.child(userUid).setValue(user);
+//                    user.dataRoomNumber = friendNumber+myNumber;
+//                    user.number = myNumber;
+//                    user.friendNumber = friendNumber;
+//                    user.connectState = "yes";
+//                    userRef.child(userUid).setValue(user);
+                    userRef.child(userUid).child("dataRoomNumber").setValue(friendNumber+myNumber);
+                    userRef.child(userUid).child("myNumber").setValue(myNumber);
+                    userRef.child(userUid).child("friendNumber").setValue(friendNumber);
+                    userRef.child(userUid).child("connectState").setValue("yes");
                     String profileURL = SaveSharedPreference.getStringValue(ConnectActivity.this, "profileURL");
                     database.getReference().child("dataRoom").child(friendNumber+myNumber).child(myNumber).setValue(profileURL);
                     SaveSharedPreference.setValue(ConnectActivity.this, "connectState", "yes");

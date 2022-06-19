@@ -54,24 +54,28 @@ public class MainActivity extends AppCompatActivity  {
         String name = SaveSharedPreference.getStringValue(MainActivity.this, "name");
         // 사용자의 설정 확인 후 설정해야 하는 곳으로 이동
         if(SaveSharedPreference.getStringValue(MainActivity.this, "name").length() == 0) {
+            System.out.println("name = " + name);
             Intent intent2 = new Intent(MainActivity.this, SignInAndUpActivity.class);
             startActivity(intent2);
             this.finish();
             return;
         }
         else if(SaveSharedPreference.getStringValue(MainActivity.this, "myNumber").length() == 0) {
+            System.out.println("myNumber = " + SaveSharedPreference.getStringValue(MainActivity.this, "myNumber"));
             Intent intent2 = new Intent(MainActivity.this, ConnectActivity.class);
             startActivity(intent2);
             this.finish();
             return;
         }
         else if(SaveSharedPreference.getStringValue(MainActivity.this, "connectState").length() == 0) {
+            System.out.println("connectState = " + SaveSharedPreference.getStringValue(MainActivity.this, "connectState"));
             Intent intent2 = new Intent(MainActivity.this, WaitingActivity.class);
             startActivity(intent2);
             this.finish();
             return;
         }
         else if(SaveSharedPreference.getStringValue(MainActivity.this, "settingState").length() == 0) {
+            System.out.println("settingState = " + SaveSharedPreference.getStringValue(MainActivity.this, "settingState"));
             Intent intent2 = new Intent(MainActivity.this, SettingActivity.class);
             startActivity(intent2);
             this.finish();

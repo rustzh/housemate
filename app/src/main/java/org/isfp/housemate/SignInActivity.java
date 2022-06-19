@@ -68,31 +68,26 @@ public class SignInActivity extends AppCompatActivity {
                     userUidRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                if ("yes".equals(snapshot.getValue(String.class))) {
-                                    Toast.makeText(SignInActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                                    // 사용자 정보 불러와서 저장
-                                    String dataRoomNumber = dataSnapshot.child("dataRoomNumber").getValue(String.class);
-                                    String myNumber = dataSnapshot.child("myNumber").getValue(String.class);
-                                    String friendNumber = dataSnapshot.child("friendNumber").getValue(String.class);
-                                    String name = dataSnapshot.child("name").getValue(String.class);
-                                    String profileURL = dataSnapshot.child("profileImageURL").getValue(String.class);
-                                    String connectState = dataSnapshot.child("connectState").getValue(String.class);
-                                    SaveSharedPreference.setValue(SignInActivity.this, "id", userUid);
-                                    SaveSharedPreference.setValue(SignInActivity.this, "name", name);
-                                    SaveSharedPreference.setValue(SignInActivity.this, "profileURL", profileURL);
-                                    SaveSharedPreference.setValue(SignInActivity.this, "myNumber", myNumber);
-                                    SaveSharedPreference.setValue(SignInActivity.this, "friendNumber", friendNumber);
-                                    SaveSharedPreference.setValue(SignInActivity.this, "connectState", connectState);
-                                    SaveSharedPreference.setValue(SignInActivity.this, "dataRoomNumber", dataRoomNumber);
+                            Toast.makeText(SignInActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                            // 사용자 정보 불러와서 저장
+                            String dataRoomNumber = dataSnapshot.child("dataRoomNumber").getValue(String.class);
+                            String myNumber = dataSnapshot.child("myNumber").getValue(String.class);
+                            String friendNumber = dataSnapshot.child("friendNumber").getValue(String.class);
+                            String name = dataSnapshot.child("name").getValue(String.class);
+                            String profileURL = dataSnapshot.child("profileImageURL").getValue(String.class);
+                            String connectState = dataSnapshot.child("connectState").getValue(String.class);
+                            System.out.println(dataRoomNumber + " " + myNumber + " " + friendNumber + " " + name + " " + connectState);
 
-                                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                }
-                                else{
+                            SaveSharedPreference.setValue(SignInActivity.this, "id", userUid);
+                            SaveSharedPreference.setValue(SignInActivity.this, "name", name);
+                            SaveSharedPreference.setValue(SignInActivity.this, "profileURL", profileURL);
+                            SaveSharedPreference.setValue(SignInActivity.this, "myNumber", myNumber);
+                            SaveSharedPreference.setValue(SignInActivity.this, "friendNumber", friendNumber);
+                            SaveSharedPreference.setValue(SignInActivity.this, "connectState", connectState);
+                            SaveSharedPreference.setValue(SignInActivity.this, "dataRoomNumber", dataRoomNumber);
 
-                                }
-                            }
+                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
 
                         @Override

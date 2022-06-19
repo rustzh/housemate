@@ -38,6 +38,7 @@ public class SettingActivity extends AppCompatActivity {
     Button settingButton;
     ArrayAdapter<String> adapter;
     String tmpDataRoom;
+    String userUid;
 //    User user;
 
     @Override
@@ -63,6 +64,7 @@ public class SettingActivity extends AppCompatActivity {
         houseworklistView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         houseworklistView.setAdapter(adapter);
 
+        userUid = SaveSharedPreference.getStringValue(SettingActivity.this, "id");
         tmpDataRoom = SaveSharedPreference.getStringValue(SettingActivity.this, "dataRoomNumber");
         DatabaseReference myRoomRef = dataRoomRef.child(tmpDataRoom).getRef();
         myRoomRef.addValueEventListener(new ValueEventListener() {
@@ -70,6 +72,7 @@ public class SettingActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("housework")){
                     Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                    SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
                     Intent intent = new Intent(SettingActivity.this, MainActivity.class);
 //                    intent.putExtra("user", user);
                     startActivity(intent);
@@ -125,7 +128,8 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 for (Object object : list){
                     String value = (String) object;
-                    dataRoomRef.child(tmpDataRoom).child("housework").child(value).setValue("");
+                    dataRoomRef.child(tmpDataRoom).child("housework").child(value).setValue(value);
+                    userRef.child(userUid).child("settingState").setValue("yes");
                     SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
                     Toast.makeText(SettingActivity.this, "설정 완료", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SettingActivity.this, MainActivity.class);
