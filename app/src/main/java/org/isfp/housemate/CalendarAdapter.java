@@ -1,5 +1,6 @@
 package org.isfp.housemate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,8 +19,7 @@ import java.util.ArrayList;
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>{
     ArrayList<LocalDate> dayList;
     private Context context;
-    public CalendarAdapter(ArrayList<LocalDate> dayList){
-
+    public CalendarAdapter(ArrayList<LocalDate> dayList, Context context){
         this.dayList=dayList;
         this.context = context;
     }
@@ -52,17 +52,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 int iYear=day.getYear();
                 int iMonth=day.getMonthValue();
                 int iDay=day.getDayOfMonth();
-                String yearMonDay=iYear+"년"+iMonth+"월"+iDay+"일";
-                //Toast.makeText(holder.itemView.getContext(), yearMonDay,Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(view.getContext(),TodayActivity.class);//TodayActivity
                 intent.putExtra("년", iYear);
                 intent.putExtra("월", iMonth);
                 intent.putExtra("일", iDay);
-//                intent.putExtra("user", user);
                 System.out.println(iYear+iMonth+iDay);
                 context.startActivity(intent);
-
-
             }
         });
     }
@@ -72,11 +68,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     }
     class CalendarViewHolder extends RecyclerView.ViewHolder{
         TextView dayText;
-        //View parentView;
         public CalendarViewHolder(@NonNull View itemView){
             super(itemView);
             dayText=itemView.findViewById(R.id.dayText);
-            //parentView=itemView.findViewById(R.id.parentView);
         }
     }
 }

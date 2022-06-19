@@ -59,11 +59,15 @@ public class ConnectActivity extends AppCompatActivity {
                     Toast.makeText(ConnectActivity.this, "연결을 기다립니다.", Toast.LENGTH_LONG).show();
                     dataSnapshot.child(myNumber).child("friendNumber").getRef().setValue(friendNumber);
                     dataSnapshot.child(myNumber).child("status").child("confirm").getRef().setValue("none");
+                    System.out.println(user.dataRoomNumber);
+                    System.out.println(myNumber+friendNumber);
                     user.dataRoomNumber = myNumber+friendNumber;
                     user.number = myNumber;
                     user.friendNumber = friendNumber;
                     userRef.child(userUid).setValue(user);
-                    // 여기서 두 유저의 데이터를 저장할 곳을 만듦
+                    SaveSharedPreference.setValue(ConnectActivity.this, "myNumber", myNumber);
+                    SaveSharedPreference.setValue(ConnectActivity.this, "friendNumber", user.friendNumber);
+                    SaveSharedPreference.setValue(ConnectActivity.this, "dataRoomNumber", user.dataRoomNumber);
 
                     finish();
                     Intent intent = new Intent(ConnectActivity.this, WaitingActivity.class);
@@ -77,6 +81,11 @@ public class ConnectActivity extends AppCompatActivity {
                     user.friendNumber = friendNumber;
                     user.connectState = "yes";
                     userRef.child(userUid).setValue(user);
+                    database.getReference().child("dataRoom").child(friendNumber+myNumber).child(myNumber).setValue(user.profileImageUrl);
+                    SaveSharedPreference.setValue(ConnectActivity.this, "connectState", "yes");
+                    SaveSharedPreference.setValue(ConnectActivity.this, "myNumber", myNumber);
+                    SaveSharedPreference.setValue(ConnectActivity.this, "friendNumber", friendNumber);
+                    SaveSharedPreference.setValue(ConnectActivity.this, "dataRoomNumber", friendNumber+myNumber);
                     // 완성된 메인화면으로 이동
                     finish();
                     Intent intent = new Intent(ConnectActivity.this, SettingActivity.class);

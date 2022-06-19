@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.appsearch.GetByDocumentIdRequest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,12 +32,15 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity  {
     FirebaseAuth auth;
     FirebaseDatabase database;
-//    Button logOutButton;
+    DatabaseReference dataRoomRef;
+    DatabaseReference friendProfileRef;
 
     TextView monthYearText;//년월 텍스트뷰
     RecyclerView recyclerView;
     LocalDate selectedDate;
-    User user;
+
+    String friendNumber;
+    String dataRoomNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +49,51 @@ public class MainActivity extends AppCompatActivity  {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
+        dataRoomRef = database.getReference("dataRoom");
 
-        if (auth.getCurrentUser() == null) {
-            System.out.println("go to sign in");
-            finish();
+        String name = SaveSharedPreference.getStringValue(MainActivity.this, "name");
+        // 사용자의 설정 확인 후 설정해야 하는 곳으로 이동
+        if(SaveSharedPreference.getStringValue(MainActivity.this, "name").length() == 0) {
             Intent intent2 = new Intent(MainActivity.this, SignInAndUpActivity.class);
             startActivity(intent2);
+            this.finish();
+            return;
+        }
+        else if(SaveSharedPreference.getStringValue(MainActivity.this, "myNumber").length() == 0) {
+            Intent intent2 = new Intent(MainActivity.this, ConnectActivity.class);
+            startActivity(intent2);
+            this.finish();
+            return;
+        }
+        else if(SaveSharedPreference.getStringValue(MainActivity.this, "connectState").length() == 0) {
+            Intent intent2 = new Intent(MainActivity.this, WaitingActivity.class);
+            startActivity(intent2);
+            this.finish();
+            return;
+        }
+        else if(SaveSharedPreference.getStringValue(MainActivity.this, "settingState").length() == 0) {
+            Intent intent2 = new Intent(MainActivity.this, SettingActivity.class);
+            startActivity(intent2);
+            this.finish();
+            return;
         }
 
-        Intent intent = getIntent();
-        user = (User)intent.getSerializableExtra("user");
-//        System.out.println("user 정보: "+user.name +" "+user.email+" "+user.connectState);
-        // 어플 꺼졌다가 켜지면 user 정보 사라짐 ㅋㅋ
+        friendNumber = SaveSharedPreference.getStringValue(MainActivity.this, "friendNumber");
+        dataRoomNumber = SaveSharedPreference.getStringValue(MainActivity.this, "dataRoomNumber");
+        System.out.println("friendNumber: " + friendNumber + " and dataRoomNumber: " + dataRoomNumber);
+        friendProfileRef = dataRoomRef.child(dataRoomNumber).getRef();
+        friendProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String url = dataSnapshot.child(friendNumber).getValue(String.class);
+                SaveSharedPreference.setValue(MainActivity.this,"friendProfileURL", url);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         monthYearText = findViewById(R.id.monthYearText);
         ImageButton prevBtn = findViewById(R.id.pre_btn);
@@ -72,6 +110,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view){
                 auth.signOut();
+                SaveSharedPreference.clearUser(MainActivity.this);
                 finish();
                 Intent intent = new Intent(getApplicationContext(), SignInAndUpActivity.class);
                 startActivity(intent);
@@ -104,8 +143,7 @@ public class MainActivity extends AppCompatActivity  {
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(selectedDate));
         ArrayList<LocalDate> dayList=daysInMonthArray(selectedDate);
-        CalendarAdapter adapter=new CalendarAdapter(dayList);
-
+        CalendarAdapter adapter = new CalendarAdapter(dayList, MainActivity.this);
         RecyclerView.LayoutManager manager=new GridLayoutManager(getApplicationContext(),7);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);

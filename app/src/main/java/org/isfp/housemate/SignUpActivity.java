@@ -95,6 +95,10 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(this, "비밀번호를 입력해 주세요.", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (inputProfile == null){
+            Toast.makeText(this, "프로필 사진을 등록해 주세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -113,6 +117,10 @@ public class SignUpActivity extends AppCompatActivity {
 
                             org.isfp.housemate.User user = new org.isfp.housemate.User(userUid, name, email, password, imageUri.getResult().toString());
                             userRef.child(userUid).setValue(user);
+
+                            SaveSharedPreference.setValue(SignUpActivity.this, "id", userUid);
+                            SaveSharedPreference.setValue(SignUpActivity.this, "name", name);
+                            SaveSharedPreference.setValue(SignUpActivity.this, "profileURL", imageUri.getResult().toString());
 
                             Intent intent = new Intent(SignUpActivity.this, ConnectActivity.class);
                             intent.putExtra("user", user);
