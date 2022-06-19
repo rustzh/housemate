@@ -26,16 +26,16 @@
     <Button
         android:id="@+id/btcamera1"
         android:layout_width="86dp"
-        android:layout_height="86dp"
+        android:layout_height="40dp"
+        android:text="사진 찍기"
         android:layout_marginLeft="160dp"
-        android:layout_marginTop="40dp" />
+        />
+
     <ImageView
         android:id="@+id/pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher_foreground"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="85dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="378dp"
+        android:layout_marginTop="20dp" />
 
 
 

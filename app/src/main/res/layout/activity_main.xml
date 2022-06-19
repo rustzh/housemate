@@ -111,6 +111,7 @@
         android:id="@+id/logOutButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Button" />
+        android:text="로그아웃"
+        android:textSize="20dp"/>
 
 </LinearLayout>

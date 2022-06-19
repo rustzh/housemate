@@ -54,7 +54,7 @@ public class TodayActivity extends AppCompatActivity {
         profile2=(ImageButton)findViewById(R.id.profile2);
         check=(ImageView)findViewById(R.id.check);
 
-<<<<<<< HEAD
+
 
         check.setVisibility(View.INVISIBLE);// 숨기기
 
@@ -66,8 +66,7 @@ public class TodayActivity extends AppCompatActivity {
 
         // profile2에 친구 사진
 
-=======
->>>>>>> b3038f5e1aa4b40bac590bc8929861e21a8568fa
+
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
         houseworkRef = database.getReference("user");
