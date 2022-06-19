@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity  {
     FirebaseDatabase database;
     DatabaseReference dataRoomRef;
     DatabaseReference friendProfileRef;
+    DatabaseReference houseworkRef;
 
     TextView monthYearText;//년월 텍스트뷰
     RecyclerView recyclerView;
@@ -41,6 +42,11 @@ public class MainActivity extends AppCompatActivity  {
 
     String friendNumber;
     String dataRoomNumber;
+
+//    Integer houseworkCount = SaveSharedPreference.getIntegerValue(MainActivity.this, "houseworkCount");
+//    Integer houseworkCount = 2;
+//    String[] houseworks = new String[houseworkCount];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +57,8 @@ public class MainActivity extends AppCompatActivity  {
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
         dataRoomRef = database.getReference("dataRoom");
 
-        String name = SaveSharedPreference.getStringValue(MainActivity.this, "name");
         // 사용자의 설정 확인 후 설정해야 하는 곳으로 이동
         if(SaveSharedPreference.getStringValue(MainActivity.this, "name").length() == 0) {
-            System.out.println("name = " + name);
             Intent intent2 = new Intent(MainActivity.this, SignInAndUpActivity.class);
             startActivity(intent2);
             this.finish();
@@ -82,22 +86,49 @@ public class MainActivity extends AppCompatActivity  {
             return;
         }
 
-        friendNumber = SaveSharedPreference.getStringValue(MainActivity.this, "friendNumber");
-        dataRoomNumber = SaveSharedPreference.getStringValue(MainActivity.this, "dataRoomNumber");
-        System.out.println("friendNumber: " + friendNumber + " and dataRoomNumber: " + dataRoomNumber);
-        friendProfileRef = dataRoomRef.child(dataRoomNumber).getRef();
-        friendProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String url = dataSnapshot.child(friendNumber).getValue(String.class);
-                SaveSharedPreference.setValue(MainActivity.this,"friendProfileURL", url);
-            }
+//        // 친구 프로필 URL를 받아와서 저장
+//        friendNumber = SaveSharedPreference.getStringValue(MainActivity.this, "friendNumber");
+//        dataRoomNumber = SaveSharedPreference.getStringValue(MainActivity.this, "dataRoomNumber");
+//        System.out.println("friendNumber: " + friendNumber + " and dataRoomNumber: " + dataRoomNumber);
+//        friendProfileRef = dataRoomRef.child(dataRoomNumber).getRef();
+//        friendProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String url = dataSnapshot.child(friendNumber).getValue(String.class);
+//                System.out.println(url);
+//                SaveSharedPreference.setValue(MainActivity.this,"friendProfileURL", url);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
+        // DB에 저장된 집안일 불러와서 배열로 저장 배열 이름: houseworks[]
+        dataRoomNumber = SaveSharedPreference.getStringValue(MainActivity.this, "dataRoomNumber");
+        houseworkRef = dataRoomRef.child(dataRoomNumber).child("housework").getRef();
+        houseworkRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Integer i = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String str = snapshot.getValue(String.class);
+                    SaveSharedPreference.setValue(MainActivity.this, "housework"+String.valueOf(i), str);
+                    i++;
+                }
+                SaveSharedPreference.setValue(MainActivity.this, "houseworkCount", i);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+
+
+        System.out.println(SaveSharedPreference.getStringValue(MainActivity.this, "housework0"));
+        System.out.println(SaveSharedPreference.getStringValue(MainActivity.this, "housework1"));
+
 
         monthYearText = findViewById(R.id.monthYearText);
         ImageButton prevBtn = findViewById(R.id.pre_btn);

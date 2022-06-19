@@ -20,7 +20,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     ArrayList<LocalDate> dayList;
     private Context context;
     public CalendarAdapter(ArrayList<LocalDate> dayList, Context context){
-        this.dayList=dayList;
+        this.dayList = dayList;
         this.context = context;
     }
     @NonNull

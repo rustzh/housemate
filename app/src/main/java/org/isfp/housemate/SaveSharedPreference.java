@@ -19,18 +19,28 @@ public class SaveSharedPreference {
         editor.commit();
 
     }
-    public static void setValue(Context context, String key, long value){
+//    public static void setValue(Context context, String key, long value){
+//        SharedPreferences.Editor editor = getPreference(context).edit();
+//        editor.putLong(key, value);
+//        editor.commit();
+//    }
+
+    public static void setValue(Context context, String key, Integer value){
         SharedPreferences.Editor editor = getPreference(context).edit();
-        editor.putLong(key, value);
+        editor.putInt(key, value);
         editor.commit();
     }
 
     public static String getStringValue(Context context, String key){
         return getPreference(context).getString(key, "");
     }
+//
+//    public static Long getLongValue(Context context, String key){
+//        return getPreference(context).getLong(key, 0);
+//    }
 
-    public static Long getLongValue(Context context, String key){
-        return getPreference(context).getLong(key, 0);
+    public static Integer getIntegerValue(Context context, String key){
+        return getPreference(context).getInt(key, 0);
     }
 
     public static void clearUser(Context context) {

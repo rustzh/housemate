@@ -76,6 +76,7 @@ public class SignInActivity extends AppCompatActivity {
                             String name = dataSnapshot.child("name").getValue(String.class);
                             String profileURL = dataSnapshot.child("profileImageURL").getValue(String.class);
                             String connectState = dataSnapshot.child("connectState").getValue(String.class);
+                            String settingState = dataSnapshot.child("settingState").getValue(String.class);
                             System.out.println(dataRoomNumber + " " + myNumber + " " + friendNumber + " " + name + " " + connectState);
 
                             SaveSharedPreference.setValue(SignInActivity.this, "id", userUid);
@@ -84,6 +85,7 @@ public class SignInActivity extends AppCompatActivity {
                             SaveSharedPreference.setValue(SignInActivity.this, "myNumber", myNumber);
                             SaveSharedPreference.setValue(SignInActivity.this, "friendNumber", friendNumber);
                             SaveSharedPreference.setValue(SignInActivity.this, "connectState", connectState);
+                            SaveSharedPreference.setValue(SignInActivity.this, "settingState", settingState);
                             SaveSharedPreference.setValue(SignInActivity.this, "dataRoomNumber", dataRoomNumber);
 
                             Intent intent = new Intent(SignInActivity.this, MainActivity.class);

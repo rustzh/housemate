@@ -70,7 +70,7 @@ public class ConnectActivity extends AppCompatActivity {
                     SaveSharedPreference.setValue(ConnectActivity.this, "friendNumber", friendNumber);
                     SaveSharedPreference.setValue(ConnectActivity.this, "dataRoomNumber", myNumber+friendNumber);
                     String profileURL = SaveSharedPreference.getStringValue(ConnectActivity.this, "profileURL");
-                    database.getReference().child("dataRoom").child(friendNumber+myNumber).child(myNumber).setValue(profileURL);
+                    database.getReference().child("dataRoom").child(friendNumber+myNumber).child("profileURL").child(myNumber).setValue(profileURL);
 
                     finish();
                     Intent intent = new Intent(ConnectActivity.this, WaitingActivity.class);
@@ -89,7 +89,7 @@ public class ConnectActivity extends AppCompatActivity {
                     userRef.child(userUid).child("friendNumber").setValue(friendNumber);
                     userRef.child(userUid).child("connectState").setValue("yes");
                     String profileURL = SaveSharedPreference.getStringValue(ConnectActivity.this, "profileURL");
-                    database.getReference().child("dataRoom").child(friendNumber+myNumber).child(myNumber).setValue(profileURL);
+                    database.getReference().child("dataRoom").child(friendNumber+myNumber).child("profileURL").child(myNumber).setValue(profileURL);
                     SaveSharedPreference.setValue(ConnectActivity.this, "connectState", "yes");
                     SaveSharedPreference.setValue(ConnectActivity.this, "myNumber", myNumber);
                     SaveSharedPreference.setValue(ConnectActivity.this, "friendNumber", friendNumber);
