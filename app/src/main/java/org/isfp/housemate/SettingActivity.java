@@ -67,9 +67,10 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("housework")){
-                    if (SaveSharedPreference.getStringValue(SettingActivity.this, "settingState") == null) {
+                    if (SaveSharedPreference.getStringValue(SettingActivity.this, "settingState").length() == 0) {
                         Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
                         SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
+                        userRef.child(userUid).child("settingState").setValue("yes");
                         finish();
                         Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                         startActivity(intent);
