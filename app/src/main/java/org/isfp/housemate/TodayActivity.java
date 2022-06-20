@@ -65,7 +65,8 @@ public class TodayActivity extends AppCompatActivity {
     String dataRoomNumber;
     String url1;
     String url2;
-    String myProfileURL = SaveSharedPreference.getStringValue(TodayActivity.this, "profileURL");
+    String myProfileURL=SaveSharedPreference.getStringValue(TodayActivity.this, "profileURL");;
+    //String myProfileURL = SaveSharedPreference.getStringValue(TodayActivity.this, "profileURL");
 //    String tempURL;
 
 
@@ -73,7 +74,6 @@ public class TodayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today);
-
         Intent intent = getIntent();
         year = intent.getIntExtra("년", 0);
         month = intent.getIntExtra("월", 0);
