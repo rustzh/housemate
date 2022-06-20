@@ -33,19 +33,13 @@ public class MainActivity extends AppCompatActivity  {
     FirebaseAuth auth;
     FirebaseDatabase database;
     DatabaseReference dataRoomRef;
-    DatabaseReference friendProfileRef;
     DatabaseReference houseworkRef;
 
     TextView monthYearText;//년월 텍스트뷰
     RecyclerView recyclerView;
     LocalDate selectedDate;
 
-    String friendNumber;
     String dataRoomNumber;
-
-//    Integer houseworkCount = SaveSharedPreference.getIntegerValue(MainActivity.this, "houseworkCount");
-//    Integer houseworkCount = 2;
-//    String[] houseworks = new String[houseworkCount];
 
 
     @Override
@@ -85,25 +79,6 @@ public class MainActivity extends AppCompatActivity  {
             this.finish();
             return;
         }
-
-//        // 친구 프로필 URL를 받아와서 저장
-//        friendNumber = SaveSharedPreference.getStringValue(MainActivity.this, "friendNumber");
-//        dataRoomNumber = SaveSharedPreference.getStringValue(MainActivity.this, "dataRoomNumber");
-//        System.out.println("friendNumber: " + friendNumber + " and dataRoomNumber: " + dataRoomNumber);
-//        friendProfileRef = dataRoomRef.child(dataRoomNumber).getRef();
-//        friendProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                String url = dataSnapshot.child(friendNumber).getValue(String.class);
-//                System.out.println(url);
-//                SaveSharedPreference.setValue(MainActivity.this,"friendProfileURL", url);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
         // DB에 저장된 집안일 불러와서 배열로 저장 배열 이름: houseworks[]
         dataRoomNumber = SaveSharedPreference.getStringValue(MainActivity.this, "dataRoomNumber");
@@ -202,10 +177,6 @@ public class MainActivity extends AppCompatActivity  {
         return dayList;
     }
 }
-    //public void onItemClick(String dayText){
-    //    String yearMonDay=monthYearFromDate(CalendarUtil.selectedDate)+" "+dayText+"일";
-        //Toast.makeText(this,yearMonDay,Toast.LENGTH_SHORT).show();
-    //}
 
 
 
