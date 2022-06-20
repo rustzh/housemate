@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
@@ -27,11 +28,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.loader.content.CursorLoader;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,7 +77,7 @@ public class CameraActivity extends AppCompatActivity {
         String dataRoomNumber = SaveSharedPreference.getStringValue(CameraActivity.this, "dataRoomNumber");
         System.out.println("dataRoomNumber = " + dataRoomNumber);
         tmpHouseworkRef = dataRoomRef.child(dataRoomNumber).child("date").child(date).child(tmpHousework).getRef();
-        userStorageRef = storage.getReference("user/");
+        userStorageRef = storage.getReference("user/housework");
 
         pic = findViewById(R.id.pic);
         btcamera1 = findViewById(R.id.btcamera1);
@@ -107,7 +112,19 @@ public class CameraActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         pic.setImageURI(photoUri);
+//        imageFilePath = getPath(data.getData());
+//        final Uri file = Uri.fromFile(new File(imageFilePath));
+
         tmpHouseworkRef.child("complete").setValue("yes");
+        userStorageRef.child("housework/").putFile(photoUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                final Task<Uri> imageUri = task.getResult().getStorage().getDownloadUrl();
+                while (!imageUri.isComplete()) ;
+
+//                String pictureURL = imageUri.getResult().toString();
+            }
+        });
     }
 
 
@@ -122,4 +139,15 @@ public class CameraActivity extends AppCompatActivity {
         );
         return image;
     }
+
+//    public String getPath(Uri uri){
+//        String[] proj = {MediaStore.Images.Media.DATA};
+//        CursorLoader cursorLoader = new CursorLoader(this, uri, proj, null, null, null);
+//
+//        Cursor cursor = cursorLoader.loadInBackground();
+//        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//
+//        cursor.moveToFirst();
+//        return cursor.getString(index);
+//    }
 }

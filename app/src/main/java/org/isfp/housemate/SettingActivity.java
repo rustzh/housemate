@@ -74,8 +74,10 @@ public class SettingActivity extends AppCompatActivity {
                 if (dataSnapshot.hasChild("housework")){
                     Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
                     SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
+                    finish();
                     Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                     startActivity(intent);
+
                 }
             }
 
@@ -134,6 +136,7 @@ public class SettingActivity extends AppCompatActivity {
                 userRef.child(userUid).child("settingState").setValue("yes");
                 SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
                 Toast.makeText(SettingActivity.this, "설정 완료", Toast.LENGTH_SHORT).show();
+                finish();
                 Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                 startActivity(intent);
             }
