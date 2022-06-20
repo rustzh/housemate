@@ -16,8 +16,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.nio.file.Watchable;
 
 public class WaitingActivity extends AppCompatActivity {
-//    EditText myNum_edit;
-//    EditText friendNum_edit;
     FirebaseAuth auth;
     FirebaseDatabase database;
     DatabaseReference myNumRef;
@@ -33,9 +31,6 @@ public class WaitingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiting);
-
-//        Intent intent = getIntent();
-//        user = (User)intent.getSerializableExtra("user");
 
         myNumber = SaveSharedPreference.getStringValue(WaitingActivity.this, "myNumber");
         friendNumber = SaveSharedPreference.getStringValue(WaitingActivity.this, "friendNumber");

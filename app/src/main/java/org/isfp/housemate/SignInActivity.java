@@ -88,6 +88,7 @@ public class SignInActivity extends AppCompatActivity {
                             SaveSharedPreference.setValue(SignInActivity.this, "settingState", settingState);
                             SaveSharedPreference.setValue(SignInActivity.this, "dataRoomNumber", dataRoomNumber);
 
+                            finish();
                             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
@@ -103,23 +104,4 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
     }
-
-//    public interface Callback{
-//        void success(String data);
-//    }
-//
-//    public String loadData(final Callback callback, FirebaseUser user){
-//        userRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                callback.success(snapshot.child(user.getUid()).child("connect").getValue(String.class));
-//                String data = snapshot.child(user.getUid()).child("connect").getValue(String.class);
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        return data;
-//    }
 }

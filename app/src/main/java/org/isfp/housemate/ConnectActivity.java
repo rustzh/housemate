@@ -26,7 +26,6 @@ public class ConnectActivity extends AppCompatActivity {
     EditText inputMyNumber;
     EditText inputFriendNumber;
     String userUid;
-    String connectState;
     User user;
 
     @Override
@@ -59,10 +58,6 @@ public class ConnectActivity extends AppCompatActivity {
                     Toast.makeText(ConnectActivity.this, "연결을 기다립니다.", Toast.LENGTH_LONG).show();
                     dataSnapshot.child(myNumber).child("friendNumber").getRef().setValue(friendNumber);
                     dataSnapshot.child(myNumber).child("status").child("confirm").getRef().setValue("none");
-//                    user.dataRoomNumber = myNumber+friendNumber;
-//                    user.number = myNumber;
-//                    user.friendNumber = friendNumber;
-//                    userRef.child(userUid).setValue(user);
                     userRef.child(userUid).child("dataRoomNumber").setValue(myNumber+friendNumber);
                     userRef.child(userUid).child("myNumber").setValue(myNumber);
                     userRef.child(userUid).child("friendNumber").setValue(friendNumber);
@@ -79,11 +74,6 @@ public class ConnectActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(ConnectActivity.this, "연결되었습니다.", Toast.LENGTH_LONG).show();
                     dataSnapshot.child(friendNumber).child("status").child("confirm").getRef().setValue("yes");
-//                    user.dataRoomNumber = friendNumber+myNumber;
-//                    user.number = myNumber;
-//                    user.friendNumber = friendNumber;
-//                    user.connectState = "yes";
-//                    userRef.child(userUid).setValue(user);
                     userRef.child(userUid).child("dataRoomNumber").setValue(friendNumber+myNumber);
                     userRef.child(userUid).child("myNumber").setValue(myNumber);
                     userRef.child(userUid).child("friendNumber").setValue(friendNumber);

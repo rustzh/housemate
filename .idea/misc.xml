@@ -4,10 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_checkwork.xml" value="0.2755208333333333" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_connect.xml" value="0.11197916666666667" />
         <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_listc.xml" value="0.25" />
         <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_main.xml" value="0.2857142857142857" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_signin.xml" value="0.11197916666666667" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_signinandup.xml" value="0.11197916666666667" />
         <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_signup.xml" value="0.24909420289855072" />
         <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_today.xml" value="0.21830985915492956" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/activity_waiting.xml" value="0.11197916666666667" />
+        <entry key="..\:/Users/soons/AndroidStudioProjects/HouseMate/app/src/main/res/layout/calendar_cell.xml" value="0.11197916666666667" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/drawable/ic_next.xml" value="0.1" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_checkwork.xml" value="0.24351851851851852" />
         <entry key="..\:/android-sdk/housemate/app/src/main/res/layout/activity_listc.xml" value="0.264" />

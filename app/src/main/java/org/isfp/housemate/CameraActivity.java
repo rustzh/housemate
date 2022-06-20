@@ -56,7 +56,6 @@ public class CameraActivity extends AppCompatActivity {
     Button btcamera1;
     ImageView pic;
 
-    private String imageFilePath;//경로변수
     private Uri photoUri;
 
     final static int REQUEST_TAKE_PHOTO = 1;//요청변수
@@ -113,22 +112,19 @@ public class CameraActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         pic.setImageURI(photoUri);
-//        imageFilePath = getPath(data.getData());
-//        final Uri file = Uri.fromFile(new File(imageFilePath));
 
         tmpHouseworkRef.child("complete").setValue("yes");
         userStorageRef.child("housework/").putFile(photoUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 final Task<Uri> imageUri = task.getResult().getStorage().getDownloadUrl();
-                while (!imageUri.isComplete()) ;
-
-//                String pictureURL = imageUri.getResult().toString();
+                while (!imageUri.isComplete());
             }
         });
     }
     public String getRealPathFromURI(Uri contentUri) {
 
+<<<<<<< HEAD
         String[] proj = { MediaStore.Images.Media.DATA };
 
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
@@ -140,6 +136,8 @@ public class CameraActivity extends AppCompatActivity {
         return path;
     }
 
+=======
+>>>>>>> 80ad6b4394db05f89e04c57d15a6977502de7537
     private File createImageFile() throws IOException {
         String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String FileName = "JPEG_" + time + "_";
@@ -151,15 +149,4 @@ public class CameraActivity extends AppCompatActivity {
         );
         return image;
     }
-
-//    public String getPath(Uri uri){
-//        String[] proj = {MediaStore.Images.Media.DATA};
-//        CursorLoader cursorLoader = new CursorLoader(this, uri, proj, null, null, null);
-//
-//        Cursor cursor = cursorLoader.loadInBackground();
-//        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//
-//        cursor.moveToFirst();
-//        return cursor.getString(index);
-//    }
 }
