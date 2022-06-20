@@ -124,7 +124,7 @@ public class CameraActivity extends AppCompatActivity {
     }
     public String getRealPathFromURI(Uri contentUri) {
 
-<<<<<<< HEAD
+
         String[] proj = { MediaStore.Images.Media.DATA };
 
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
@@ -136,8 +136,7 @@ public class CameraActivity extends AppCompatActivity {
         return path;
     }
 
-=======
->>>>>>> 80ad6b4394db05f89e04c57d15a6977502de7537
+
     private File createImageFile() throws IOException {
         String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String FileName = "JPEG_" + time + "_";
