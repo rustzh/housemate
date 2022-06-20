@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -144,11 +145,11 @@ public class TodayActivity extends AppCompatActivity {
 
                     // 체크 표시 추가
                     ImageView check = new ImageView(TodayActivity.this);
-                    final int checkSize = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
-                    RelativeLayout.LayoutParams p1 = new RelativeLayout.LayoutParams(checkSize, checkSize);
+                    final int checkSize = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
+                    RelativeLayout.LayoutParams p1 = new RelativeLayout.LayoutParams(checkSize, RelativeLayout.LayoutParams.MATCH_PARENT);
                     final int top2 = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
                     final int left2 = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
-                    p1.setMargins(left2, top2, 0, 0);
+                    p1.setMargins(left2, 0, 0, 0);
                     check.setLayoutParams(p1);
                     check.setId(i);
                     check.setBackgroundDrawable(getResources().getDrawable(R.drawable.check));
@@ -177,8 +178,8 @@ public class TodayActivity extends AppCompatActivity {
                     // 집안일 텍스트 추가
                     TextView houseworkName = new TextView(TodayActivity.this);
                     RelativeLayout.LayoutParams p2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    final int top3 = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 13, getResources().getDisplayMetrics());
-                    final int left3 = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 45, getResources().getDisplayMetrics());
+                    final int top3 = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+                    final int left3 = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 65, getResources().getDisplayMetrics());
                     p2.setMargins(left3, top3, 0, 0);
                     houseworkName.setLayoutParams(p2);
                     houseworkName.setId(i);
@@ -224,6 +225,8 @@ public class TodayActivity extends AppCompatActivity {
                             }
                             else { // 집안일이 완료된 상황
                                 // 저장된 사진을 확인할 수 있음. 카메라로 연결
+                                Toast.makeText(TodayActivity.this, "완료된 집안일입니다", Toast.LENGTH_SHORT).show();
+                                return;
                             }
                         }
                     });
@@ -269,7 +272,8 @@ public class TodayActivity extends AppCompatActivity {
                         public void onClick(View view) {
                             // duty가 default면 url1, url1이면 url2, url2이면 url1
                             int i = view.getId();
-                            if(tmpDuty[i].equals("default")){
+                            if (completeState[i].equals("yes")) return;
+                            else if(tmpDuty[i].equals("default")){
                                 Glide.with(TodayActivity.this).load(url1).into(profileButton);
                                 tmpDuty[i] = url1;
                                 tmpDateRef.child(houseworks[i]).child("duty").setValue(url1);

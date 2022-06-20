@@ -29,6 +29,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -37,6 +42,12 @@ import java.util.Date;
 import javax.annotation.Nullable;
 
 public class CameraActivity extends AppCompatActivity {
+    FirebaseDatabase database;
+    FirebaseStorage storage;
+    DatabaseReference dataRoomRef;
+    DatabaseReference tmpHouseworkRef;
+    StorageReference userStorageRef;
+
     final private static String TAG = "태그명";
     Button btcamera1;
     ImageView pic;
@@ -50,7 +61,20 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkwork);
+        setContentView(R.layout.activity_camera);
+
+        Intent intent = getIntent();
+        String date = intent.getStringExtra("date");
+        String tmpHousework = intent.getStringExtra("tmpHousework");
+
+        database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
+        storage = FirebaseStorage.getInstance("gs://housemate-6fa71.appspot.com");
+        dataRoomRef = database.getReference("dataRoom");
+        String dataRoomNumber = SaveSharedPreference.getStringValue(CameraActivity.this, "dataRoomNumber");
+        System.out.println("dataRoomNumber = " + dataRoomNumber);
+        tmpHouseworkRef = dataRoomRef.child(dataRoomNumber).child("date").child(date).child(tmpHousework).getRef();
+        userStorageRef = storage.getReference("user/");
+
         pic = findViewById(R.id.pic);
         btcamera1 = findViewById(R.id.btcamera1);
         btcamera1.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +109,7 @@ public class CameraActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         pic.setImageURI(photoUri);
+        tmpHouseworkRef.child("complete").setValue("yes");
     }
     public String getRealPathFromURI(Uri contentUri) {
 
@@ -111,11 +136,3 @@ public class CameraActivity extends AppCompatActivity {
         return image;
     }
 }
-
-
-
-
-
-
-
-
