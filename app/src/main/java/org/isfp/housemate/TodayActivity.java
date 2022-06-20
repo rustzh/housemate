@@ -263,6 +263,8 @@ public class TodayActivity extends AppCompatActivity {
                                 if(tmpDuty[i].equals(myProfileURL)){
                                     // 카메라로 연결
                                     Intent intent = new Intent(TodayActivity.this, CameraActivity.class);
+                                    intent.putExtra("date", date);
+                                    intent.putExtra("tmpHousework", houseworks[i]);
                                     startActivity(intent);
                                 }
                                 else{
