@@ -74,7 +74,6 @@ public class SettingActivity extends AppCompatActivity {
                 if (dataSnapshot.hasChild("housework")){
                     Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
                     SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
-//                    SaveSharedPreference.setValue(SettingActivity.this, "houseworkCount", adapter.getCount());
                     Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
@@ -104,8 +103,6 @@ public class SettingActivity extends AppCompatActivity {
                     Toast.makeText(SettingActivity.this,"최대 7개까지 가능합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-//                intent.putExtra("리스트", count);
                 String input = inputHousework.getText().toString();
                 list.add(input);
                 adapter.notifyDataSetChanged();
@@ -136,7 +133,6 @@ public class SettingActivity extends AppCompatActivity {
                 }
                 userRef.child(userUid).child("settingState").setValue("yes");
                 SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
-                SaveSharedPreference.setValue(SettingActivity.this, "houseworkCount", adapter.getCount());
                 Toast.makeText(SettingActivity.this, "설정 완료", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                 startActivity(intent);

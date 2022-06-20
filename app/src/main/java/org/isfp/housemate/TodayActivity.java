@@ -3,6 +3,7 @@ package org.isfp.housemate;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -65,9 +66,13 @@ public class TodayActivity extends AppCompatActivity {
     String dataRoomNumber;
     String url1;
     String url2;
+
     String myProfileURL=SaveSharedPreference.getStringValue(TodayActivity.this, "profileURL");;
     //String myProfileURL = SaveSharedPreference.getStringValue(TodayActivity.this, "profileURL");
 //    String tempURL;
+
+    //String myProfileURL;
+
 
 
     @Override
@@ -102,11 +107,13 @@ public class TodayActivity extends AppCompatActivity {
 //        profile2=(ImageButton)findViewById(R.id.profile2);
 
 
+
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
         houseworkRef = database.getReference("user");
         dataRoomRef = database.getReference("dataRoom");
         dataRoomNumber = SaveSharedPreference.getStringValue(TodayActivity.this, "dataRoomNumber");
+        myProfileURL = SaveSharedPreference.getStringValue(TodayActivity.this, "profileURL");
 
         dateText = (TextView) findViewById(R.id.dateText);
         dateText.setText(year + "." + month + "." + day);
@@ -151,22 +158,19 @@ public class TodayActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                      urlArray[i] = snapshot.getValue(String.class);
                      i++;
-//                    System.out.println(url);
-//                    SaveSharedPreference.setValue(MainActivity.this, "friendProfileURL", url);
                 }
                 url1 = urlArray[0];
                 url2 = urlArray[1];
                 System.out.println(url1);
                 System.out.println(url2);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
-        // 집안일 받아와서 뷰그룹 생성 (인덱스 잘 생각하기!! 첫 번째는 인덱스 0)
+        // 집안일 받아와서 뷰그룹 생성
         houseworkRef = dataRoomRef.child(dataRoomNumber).child("housework").getRef();
         houseworkRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -205,7 +209,11 @@ public class TodayActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             completeState[finalI] = dataSnapshot.child(houseworks[finalI]).child("complete").getValue(String.class);
-                            if (completeState[finalI].equals("yes")){
+                            System.out.println("compleState["+finalI+"] = "+completeState);
+                            if(completeState[finalI] == null){
+                               return;
+                            }
+                            else if (completeState[finalI].equals("yes")){
                                 check.setVisibility(VISIBLE);
                             }
                         }
@@ -284,6 +292,19 @@ public class TodayActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             tmpDuty[finalI3] = dataSnapshot.child(houseworks[finalI3]).child("duty").getValue(String.class);
+                            if(tmpDuty[finalI3] == null) {
+                                return;
+                            }
+                            if(tmpDuty[finalI3].equals(url1)) {
+                                Activity activity = TodayActivity.this;
+                                if(activity.isFinishing()) return;
+                                Glide.with(TodayActivity.this).load(url1).into(profileButton);
+                            }
+                            if(tmpDuty[finalI3].equals(url2)) {
+                                Activity activity = TodayActivity.this;
+                                if(activity.isFinishing()) return;
+                                Glide.with(TodayActivity.this).load(url2).into(profileButton);
+                            }
                         }
 
                         @Override
@@ -323,6 +344,7 @@ public class TodayActivity extends AppCompatActivity {
             }
         });
 
+
         // profile1에 본인 사진
 //        String profile1_url = SaveSharedPreference.getStringValue(TodayActivity.this,"profileURL");
 //        Glide.with(this).load(profile1_url).into(profile1);
@@ -340,6 +362,7 @@ public class TodayActivity extends AppCompatActivity {
 //
 //            }
 //        });
+
 
     }
 }
