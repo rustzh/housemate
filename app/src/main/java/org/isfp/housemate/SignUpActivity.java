@@ -121,6 +121,7 @@ public class SignUpActivity extends AppCompatActivity {
                             SaveSharedPreference.setValue(SignUpActivity.this, "name", name);
                             SaveSharedPreference.setValue(SignUpActivity.this, "profileURL", imageUri.getResult().toString());
 
+                            finish();
                             Intent intent = new Intent(SignUpActivity.this, ConnectActivity.class);
                             intent.putExtra("user", user);
                             startActivity(intent);
@@ -154,7 +155,6 @@ public class SignUpActivity extends AppCompatActivity {
                 profileImageUri = data.getData();
                 profilePathUri = getPath(data.getData());
                 inputProfile.setImageURI(profileImageUri);
-//                inputProfile.setImageDrawable();// 이미지 띄움
                 break;
             }
         }

@@ -39,16 +39,11 @@ public class SettingActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     String tmpDataRoom;
     String userUid;
-//    String[] houseworks = new String[7];
-//    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
-//        Intent intent = getIntent();
-//        user = (User)intent.getSerializableExtra("user");
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
@@ -72,12 +67,13 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("housework")){
-                    Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
-                    SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
-                    finish();
-                    Intent intent = new Intent(SettingActivity.this, MainActivity.class);
-                    startActivity(intent);
-
+                    if (SaveSharedPreference.getStringValue(SettingActivity.this, "settingState") == null) {
+                        Toast.makeText(SettingActivity.this, "상대방이 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                        SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
+                        finish();
+                        Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
 
@@ -125,16 +121,12 @@ public class SettingActivity extends AppCompatActivity {
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Integer i = 0;
+                SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
                 for (Object object : list){
-                    String value = (String) object;
-//                    SaveSharedPreference.setValue(SettingActivity.this, "housework"+String.valueOf(i), value);
+                     String value = (String) object;
                     dataRoomRef.child(tmpDataRoom).child("housework").child(value).setValue(value);
-                    System.out.println("housework"+String.valueOf(i));
-                    i++;
                 }
                 userRef.child(userUid).child("settingState").setValue("yes");
-                SaveSharedPreference.setValue(SettingActivity.this, "settingState", "yes");
                 Toast.makeText(SettingActivity.this, "설정 완료", Toast.LENGTH_SHORT).show();
                 finish();
                 Intent intent = new Intent(SettingActivity.this, MainActivity.class);

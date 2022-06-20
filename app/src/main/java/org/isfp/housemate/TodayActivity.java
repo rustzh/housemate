@@ -48,7 +48,7 @@ public class TodayActivity extends AppCompatActivity {
     DatabaseReference tmpDateRef;
 
     TextView dateText;
-    Integer year, month, day, count;
+    Integer year, month, day;
 
     String[] houseworks = new String[7];
     String[] completeState = new String[7];
@@ -160,7 +160,6 @@ public class TodayActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             completeState[finalI] = dataSnapshot.child(houseworks[finalI]).child("complete").getValue(String.class);
-                            System.out.println("compleState["+finalI+"] = "+completeState);
                             if(completeState[finalI] == null){
                                 return;
                             }
@@ -224,7 +223,6 @@ public class TodayActivity extends AppCompatActivity {
                                 }
                             }
                             else { // 집안일이 완료된 상황
-                                // 저장된 사진을 확인할 수 있음. 카메라로 연결
                                 Toast.makeText(TodayActivity.this, "완료된 집안일입니다", Toast.LENGTH_SHORT).show();
                                 return;
                             }
