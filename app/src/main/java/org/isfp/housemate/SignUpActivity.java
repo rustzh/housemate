@@ -50,7 +50,6 @@ public class SignUpActivity extends AppCompatActivity {
     String profilePathUri;
     File tempFile;
     public static final int PICK_FROM_ALBUM = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
