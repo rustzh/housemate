@@ -14,12 +14,9 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
 import android.widget.LinearLayout;
-
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,15 +47,7 @@ public class TodayActivity extends AppCompatActivity {
     DatabaseReference tmpDateRef;
 
     TextView dateText;
-    Integer year, month, day, checking;
-
-
-    ListView lvList;
-    TextView workname;
-    ImageButton profile1;
-    ImageButton profile2;
-    ImageView check;
-    Button back;
+    Integer year, month, day, count;
 
     String[] houseworks = new String[7];
     String[] completeState = new String[7];
@@ -66,47 +55,17 @@ public class TodayActivity extends AppCompatActivity {
     String dataRoomNumber;
     String url1;
     String url2;
-
-    String myProfileURL=SaveSharedPreference.getStringValue(TodayActivity.this, "profileURL");;
-    //String myProfileURL = SaveSharedPreference.getStringValue(TodayActivity.this, "profileURL");
-//    String tempURL;
-
-    //String myProfileURL;
-
-
+    String myProfileURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today);
+
         Intent intent = getIntent();
         year = intent.getIntExtra("년", 0);
         month = intent.getIntExtra("월", 0);
         day = intent.getIntExtra("일", 0);
-
-
-        checking=intent.getIntExtra("인증완료",0);
-
-
-
-
-        check.setVisibility(View.INVISIBLE);// 숨기기
-
-        if(checking==1){
-            check.setVisibility(View.VISIBLE);
-        }
-        // profile1에 본인 사진
-
-
-        // profile2에 친구 사진
-
-
-//        houseworkListView=(ListView)findViewById((R.id.houseworkListView));
-//        workname=(TextView)findViewById(R.id.workname);
-//        profile1=(ImageButton)findViewById(R.id.profile1);
-//        profile2=(ImageButton)findViewById(R.id.profile2);
-
-
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://housemate-6fa71-default-rtdb.firebaseio.com/");
@@ -137,18 +96,9 @@ public class TodayActivity extends AppCompatActivity {
 
             }
         });
-
-        profile1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //내가 집안일을 선택했을때 친구한테 신호?가 가서 친구의 리스트는 비활성화 되게하기
-            }
-        });
-        //만약 친구의 버튼이 눌렸을때 신호를 받아서 내 리스트가 비활성화 되게하기
-
         tmpDateRef = dateRef.child(date).getRef();
 
-                // 둘의 사진 다운 링크 불러와
+        // 둘의 사진 다운 링크 불러와
         profileRef = dataRoomRef.child(dataRoomNumber).child("profileURL").getRef();
         profileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -156,8 +106,8 @@ public class TodayActivity extends AppCompatActivity {
                 String[] urlArray = new String[2];
                 Integer i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                     urlArray[i] = snapshot.getValue(String.class);
-                     i++;
+                    urlArray[i] = snapshot.getValue(String.class);
+                    i++;
                 }
                 url1 = urlArray[0];
                 url2 = urlArray[1];
@@ -211,7 +161,7 @@ public class TodayActivity extends AppCompatActivity {
                             completeState[finalI] = dataSnapshot.child(houseworks[finalI]).child("complete").getValue(String.class);
                             System.out.println("compleState["+finalI+"] = "+completeState);
                             if(completeState[finalI] == null){
-                               return;
+                                return;
                             }
                             else if (completeState[finalI].equals("yes")){
                                 check.setVisibility(VISIBLE);
@@ -223,7 +173,7 @@ public class TodayActivity extends AppCompatActivity {
                         }
                     });
 
-                    
+
                     // 집안일 텍스트 추가
                     TextView houseworkName = new TextView(TodayActivity.this);
                     RelativeLayout.LayoutParams p2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -345,26 +295,5 @@ public class TodayActivity extends AppCompatActivity {
 
             }
         });
-
-
-        // profile1에 본인 사진
-//        String profile1_url = SaveSharedPreference.getStringValue(TodayActivity.this,"profileURL");
-//        Glide.with(this).load(profile1_url).into(profile1);
-
-        // profile2에 친구 사진
-//        String profile2_url = SaveSharedPreference.getStringValue(TodayActivity.this,"friendProfileURL");
-//        Glide.with(this).load(profile2_url).into(profile2);
-
-//        workname.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Context context = view.getContext();
-//                Intent intent = new Intent(view.getContext(), CameraActivity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
-
-
     }
 }
